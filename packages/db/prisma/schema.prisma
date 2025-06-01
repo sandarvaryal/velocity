@@ -1,0 +1,133 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  superAdmin
+  admin
+  // user
+}
+
+model User {
+  // id       Int    @id @default(autoincrement())
+  id                  String @id @default(uuid())
+  email               String @unique
+  username            String
+  password            String
+  refreshTokenVersion Int    @default(1)
+  role                Role   @default(admin)
+  phone               String
+}
+
+model Shipment {
+  id                      String   @id @unique @default(uuid())
+  //experiment pheriiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+  autoAwb                 Int      @unique @default(autoincrement())
+  trackingNumber          String?
+  trackingId              String?
+  date                    DateTime
+  awbNumber               String   @unique
+  hub                     String
+  service                 String
+  division                Int
+  totalBoxes              Int
+  totalActualWeightKg     Float
+  totalVolumetricWeightKg Float
+  totalChargeableWeightKg Float
+  invoiceTotal            Float
+
+  verificationStatus VerificationStatus?
+  consignor          Consignor?
+  Boxes              Boxes[]             @relation("shipmentBoxes")
+  consignee          Consignee?
+}
+
+model Consignor {
+  id          Int     @id @unique @default(autoincrement())
+  company     String
+  name        String
+  country     String
+  address1    String
+  address2    String
+  zip         String
+  city        String
+  state       String
+  phoneNumber String
+  email       String?
+
+  shipmentId String   @unique
+  shipment   Shipment @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
+}
+
+model Consignee {
+  id          Int    @id @unique @default(autoincrement())
+  company     String
+  name        String
+  country     String
+  address1    String
+  address2    String
+  zip         String
+  city        String
+  state       String
+  phoneNumber String
+  email       String
+
+  shipment   Shipment? @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
+  shipmentId String    @unique
+}
+
+model Boxes {
+  id                 Int    @id @unique @default(autoincrement())
+  boxAwbNumber       String
+  lengthCm           Int
+  widthCm            Int
+  heightCm           Int
+  actualWeightKg     Float
+  volumetricWeightKg Float
+  chargeableWeightKg Float
+
+  shipment   Shipment? @relation("shipmentBoxes", fields: [shipmentId], references: [id], onDelete: Cascade)
+  shipmentId String?
+
+  // boxesId      Int           @unique
+  BoxesContent BoxesContent[]
+}
+
+model BoxesContent {
+  // id          Int    @id @unique @default(autoincrement())
+  id String @unique
+
+  description String
+  HsCode      String
+  quantity    Int
+  // unitType    Int
+  unitRate    Float
+  unitWeight  Float
+  total       Float
+
+  boxes   Boxes? @relation(fields: [boxesId], references: [id], onDelete: Cascade)
+  boxesId Int
+}
+
+model VerificationStatus {
+  id                    Int       @id @unique @default(autoincrement())
+  shipmentVerified      Boolean   @default(false)
+  shipmentVerifiedTime  DateTime?
+  shipmentProcessed     Boolean   @default(false)
+  shipmentDeparture     Boolean   @default(false)
+  shipmentDepartureTime DateTime?
+  shipmentDelivered     Boolean   @default(false)
+  shipmentDeliveredTime DateTime?
+
+  shipment   Shipment? @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
+  shipmentId String    @unique
+}
