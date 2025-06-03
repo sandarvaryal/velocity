@@ -66,13 +66,13 @@ const Services: React.FC = () => {
     "/fedex.svg",
     "/dhl.svg",
     "/ups.svg",
-    // "/person4.jpg",
-    // "/person5.jpg",
+    "/aramex.png",
+    "/dpd.svg",
   ];
 
   if (!priceAnimationData) return <p>Loading animation...</p>;
 
-  const repeatCount = 20;
+  const repeatCount = 10;
   const repeatedImages: any = [];
   for (let i = 0; i < repeatCount; i++) {
     images.forEach((image, index) => {
@@ -80,120 +80,96 @@ const Services: React.FC = () => {
     });
   }
   return (
-    <section className="py-16">
-      <div className="sm:text-center mb-12 flex flex-col gap-[1.5rem]">
-        <div className="relative ml-30 mr-30 overflow-hidden mb-[5rem] mt-[3rem]">
-          <div className="pointer-events-none absolute top-0 bottom-0 left-0 w-24 z-10 bg-gradient-to-r from-gray-100 to-transparent" />
-          <div className="pointer-events-none absolute top-0 bottom-0 right-0 w-24 z-10 bg-gradient-to-l from-gray-100 to-transparent" />
+    <section className="py-8 sm:py-16" id="Services">
+      <div className="sm:text-center mb-8 sm:mb-12 flex flex-col gap-4 sm:gap-[1.5rem]">
+        <div className="relative mx-4 sm:ml-30 sm:mr-30 overflow-hidden mb-8 sm:mb-[5rem] mt-6 sm:mt-[3rem]">
+          <div className="pointer-events-none absolute top-0 bottom-0 left-0 w-16 sm:w-24 z-10 bg-gradient-to-r from-gray-100 to-transparent" />
+          <div className="pointer-events-none absolute top-0 bottom-0 right-0 w-16 sm:w-24 z-10 bg-gradient-to-l from-gray-100 to-transparent" />
           <div className="flex animate-marquee-left w-max">
-            <div className="flex flex-nowrap gap-[4rem] ">
+            <div className="flex flex-nowrap gap-6 sm:gap-[4rem]">
               {repeatedImages.map((image: any) => (
                 <img
                   key={image.key}
                   src={image.src}
                   alt={`image-${image.key}`}
-                  className="h-[5rem] w-[7rem] object-cover rounded-lg "
+                  className="h-16 w-24 sm:h-[5rem] sm:w-[7rem] object-cover rounded-lg"
                 />
               ))}
             </div>
           </div>
         </div>
 
-        <h2 className=" md:text-[2.5rem] font-bold text-gray-900">
+        <h2 className="text-2xl sm:text-3xl md:text-[2.5rem] font-bold text-gray-900 px-4 sm:px-0">
           Reliable Logistics. Unmatched{" "}
           <span className="text-[#F97316]">Velocity</span>.
         </h2>
-        <h4 className="md:text-[1rem] text-[#898989]">
-          Let Velocity handle your cargo with speed and care — <br></br>book
-          your first shipment now on WhatsApp.
+        <h4 className="text-sm sm:text-base md:text-[1rem] text-[#898989] px-4 sm:px-0">
+          Let Velocity handle your cargo with speed and care — <br />
+          book your first shipment now on WhatsApp.
         </h4>
 
         <a
-          className="bg-black block self-center text-white py-2 p-4 rounded-[1rem]"
+          className="bg-black block self-center text-white py-2 px-4 sm:p-4 rounded-[1rem] text-sm sm:text-base"
           href="https://wa.me/message/T3WNI4I4O2XZO1"
           target="_blank"
         >
           Contact Us
-          {/* <img
-            src="/whatsapp.svg"
-            alt="whatsapp svg"
-            className="h-3 text-white"
-          /> */}
         </a>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mx-auto md:ml-50 md:mr-50">
-        <div className="p-10 flex flex-col gap-5  bg-white  overflow-hidden shadow-md hover:shadow-2xl transform hover:scale-105 transition-all duration-300 h-[25rem] rounded-2xl">
-          <span className="text-[1.2rem] font-bold">Affordable Pricing</span>
-          <p className="text-[#898989]">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5 mx-4 sm:mx-auto md:ml-30 md:mr-30">
+        <div className="p-6 sm:p-10 flex flex-col gap-4 sm:gap-5 bg-white overflow-hidden shadow-md hover:shadow-2xl transform hover:scale-105 transition-all duration-300 h-[20rem] sm:h-[25rem] rounded-2xl">
+          <span className="text-lg sm:text-[1.2rem] font-bold">
+            Affordable Pricing
+          </span>
+          <p className="text-[#898989] text-sm sm:text-base">
             Get top-quality cargo services at competitive rates that fit your
             budget.
           </p>
-          {/* <div className="scale-85 origin-center">
-            <Lottie animationData={priceAnimationData} loop={true} />
-          </div> */}
-          <div className="h-[13rem] scale-95 origin-center flex justify-center ">
+          <div className="h-[10rem] sm:h-[13rem] scale-95 origin-center flex justify-center">
             <Lottie
               animationData={priceAnimationData}
               loop={true}
-              className="scale-105"
+              className="scale-100 sm:scale-105"
             />
           </div>
         </div>
-        <div className="p-10 flex flex-col gap-5 bg-white  overflow-hidden shadow-md hover:shadow-2xl transform hover:scale-105 transition-all duration-300 h-[25rem] rounded-2xl">
-          <span className="text-[1.2rem] font-bold">Live Tracking</span>
-          <p className="text-[#898989]">
+        <div className="p-6 sm:p-10 flex flex-col gap-4 sm:gap-5 bg-white overflow-hidden shadow-md hover:shadow-2xl transform hover:scale-105 transition-all duration-300 h-[20rem] sm:h-[25rem] rounded-2xl">
+          <span className="text-lg sm:text-[1.2rem] font-bold">
+            Live Tracking
+          </span>
+          <p className="text-[#898989] text-sm sm:text-base">
             Get top-quality cargo services at competitive rates that fit your
             budget.
           </p>
-          <div className="">
+          <div className="h-[10rem] sm:h-full scale-150 sm:scale-175">
             <Lottie
               animationData={trackAnimationData}
               loop={true}
-              className="w-full h-full scale-175"
+              className="w-full h-full"
             />
           </div>
         </div>
-        <div className="p-10 flex flex-col gap-5 bg-white  overflow-hidden shadow-md hover:shadow-2xl transform hover:scale-105 transition-all duration-300 h-[25rem] rounded-2xl">
-          <span className="text-[1.2rem] font-bold">Fast Delivery</span>
-          <p className="text-[#898989]">
+        <div className="p-6 sm:p-10 flex flex-col gap-4 sm:gap-5 bg-white overflow-hidden shadow-md hover:shadow-2xl transform hover:scale-105 transition-all duration-300 h-[20rem] sm:h-[25rem] rounded-2xl">
+          <span className="text-lg sm:text-[1.2rem] font-bold">
+            Fast Delivery
+          </span>
+          <p className="text-[#898989] text-sm sm:text-base">
             Get top-quality cargo services at competitive rates that fit your
             budget.
           </p>
-          <div className=" transform scale-110 origin-center">
-            <Lottie animationData={fastAnimationData} loop={true} />
+          <div className="h-[10rem] sm:h-full scale-100 sm:scale-110 origin-center">
+            <Lottie
+              animationData={fastAnimationData}
+              loop={true}
+              className="w-full h-full"
+            />
           </div>
         </div>
       </div>
-      <h2 className=" md:text-[2.5rem] font-bold text-gray-900 text-center mt-12 ">
+      <h2 className="text-2xl sm:text-3xl md:text-[2.5rem] font-bold text-gray-900 text-center mt-8 sm:mt-12 px-4 sm:px-0">
         …and so much more!
       </h2>
-      {/* <div className="grid gap-[1rem] grid-cols-4 md:ml-75 md:mr-75">
-        <div className="text-center text-[0.9rem] font-bold p-[1.5rem] bg-white h-[12rem] rounded-[0.7rem] overflow-hidden shadow-md hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
-          Secure Packaging
-        </div>
-        <div className="text-center text-[0.9rem] font-bold p-[1.5rem] bg-white h-[12rem] rounded-[0.7rem] overflow-hidden shadow-md hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
-          24/7 Customer Support
-        </div>
-        <div className="text-center text-[0.9rem] font-bold p-[1.5rem] bg-white h-[12rem] rounded-[0.7rem] overflow-hidden shadow-md hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
-          Corporate & Bulk Shipping
-        </div>
-        <div className="text-center text-[0.9rem] font-bold p-[1.5rem] bg-white h-[12rem] rounded-[0.7rem] overflow-hidden shadow-md hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
-          Flexible Scheduling
-        </div>
-        <div className="text-center text-[0.9rem] font-bold p-[1.5rem] bg-white h-[12rem] rounded-[0.7rem] overflow-hidden shadow-md hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
-          Multiple Payment Options
-        </div>
-        <div className="text-center text-[0.9rem] font-bold p-[1.5rem] bg-white h-[12rem] rounded-[0.7rem] overflow-hidden shadow-md hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
-          Heavy & Oversized Cargo
-        </div>
-        <div className="text-center text-[0.9rem] font-bold p-[1.5rem] bg-white h-[12rem] rounded-[0.7rem] overflow-hidden shadow-md hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ">
-          Online Booking System
-        </div>
-        <div className="text-center text-[0.9rem] font-bold p-[1.5rem] bg-white h-[12rem] rounded-[0.7rem] overflow-hidden shadow-md hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
-          Volume-Based Discounts
-        </div>
-      </div> */}
     </section>
   );
 };

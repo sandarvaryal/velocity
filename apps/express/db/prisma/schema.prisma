@@ -137,3 +137,25 @@ model VerificationStatus {
   shipment   Shipment? @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
   shipmentId String    @unique
 }
+
+model Blog {
+  id          Int      @id @unique @default(autoincrement())
+  title       String
+  description String
+  dateAdded   DateTime
+}
+
+model UploadedFile {
+  id         Int      @id @default(autoincrement())
+  filename   String
+  key        String
+  mimeType   String
+  size       Int
+  url        String
+  uploadedAt DateTime @default(now())
+}
+
+model Email {
+  id    Int    @id @unique @default(autoincrement())
+  email String
+}

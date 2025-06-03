@@ -197,11 +197,13 @@ import Nav from "./components/Nav";
 import { Toaster } from "react-hot-toast";
 import { ManageStaffs } from "./pages/ManageStaffs";
 import { CreateUser } from "./pages/CreateUser";
+import { Blog } from "./pages/Blog";
 
 import Footer from "./components/Footer";
 import { Dashboard } from "./pages/Dashboard";
 import { Tracking } from "./pages/Tracking";
 import { BookShipment } from "./pages/BookShipment";
+import { CreateBlog } from "./pages/CreateBlog";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -238,6 +240,14 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout children={<Home />} />,
+  },
+  {
+    path: "/blog",
+    element: <Layout children={<Blog />} />,
+  },
+  {
+    path: "/createBlog",
+    element: <Layout children={<CreateBlog />} />,
   },
 
   {

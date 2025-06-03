@@ -119,101 +119,61 @@ for (let i = 0; i < repeatCount; i++) {
 export default function Testimonial() {
   return (
     <>
-      <section className="mb-[10rem]  flex flex-col">
-        <h2 className=" md:text-[2.5rem] font-bold text-gray-900 mt-[3rem] text-center">
+      <section className="mb-[5rem] flex flex-col" id="Testimonials">
+        <h2 className="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] font-bold text-gray-900 mt-[2rem] sm:mt-[3rem] text-center">
           See why our users love{" "}
           <span className="text-[#F97316]">Velocity</span>
         </h2>
-        <h4 className="md:text-[1rem] text-[#898989] text-center">
-          Let Velocity handle your cargo with speed and care — <br></br>book
-          your first shipment now on WhatsApp.
+        <h4 className="text-[0.875rem] sm:text-[1rem] text-[#898989] text-center px-4 sm:px-0">
+          Let Velocity handle your cargo with speed and care —{" "}
+          <br className="block sm:hidden" />
+          book your first shipment now on WhatsApp.
         </h4>
         <a
-          className="bg-black block self-center text-white py-2 p-4 rounded-[1rem] mt-[2rem] "
+          className="bg-black block self-center text-white py-2 px-4 sm:p-4 rounded-[1rem] mt-[1.5rem] sm:mt-[2rem] text-sm sm:text-base"
           href="https://wa.me/message/T3WNI4I4O2XZO1"
           target="_blank"
         >
           Contact Us
-          {/* <img
-            src="/whatsapp.svg"
-            alt="whatsapp svg"
-            className="h-3 text-white"
-          /> */}
         </a>
 
-        <div className="mt-[4rem] relative h-[40rem] overflow-hidden before:content-[''] before:absolute before:inset-x-0 before:top-0 before:h-24 before:bg-gradient-to-b before:from-gray-100 before:to-transparent before:z-10 after:content-[''] after:absolute after:inset-x-0 after:bottom-0 after:h-24 after:bg-gradient-to-t after:from-gray-100 after:to-transparent after:z-10">
-          <div className="animate-marquee flex flex-col gap-6">
-            <div className="mt-20 grid grid-cols-4 gap-6">
+        <div className="mt-[2rem] sm:mt-[4rem] relative h-[40rem] sm:h-[40rem] overflow-hidden before:content-[''] before:absolute before:inset-x-0 before:top-0 before:h-16 sm:before:h-24 before:bg-gradient-to-b before:from-gray-100 before:to-transparent before:z-10 after:content-[''] after:absolute after:inset-x-0 after:bottom-0 after:h-16 sm:after:h-24 after:bg-gradient-to-t after:from-gray-100 after:to-transparent after:z-10">
+          <div className="animate-marquee flex flex-col gap-4 sm:gap-6">
+            <div className="mt-10 sm:mt-20 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 px-4 sm:px-6">
               {repeatedInstance.map((person: any, index: any) => (
                 <div
                   key={"first-" + index}
-                  className="flex flex-col gap-8 bg-white transform rotate-y-12 skew-x-[25deg] shadow-2xl rounded-2xl p-8"
+                  className="flex flex-col gap-6 sm:gap-8 bg-white transform rotate-y-12 skew-x-[25deg] shadow-2xl rounded-2xl p-6 sm:p-8"
                 >
-                  <div className="flex gap-8">
-                    <div className="flex-1 rounded-full">
+                  <div className="flex gap-4 sm:gap-8">
+                    <div className="flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden">
                       <img
                         src={person.image}
                         alt="pfp"
-                        className="rounded-full"
+                        className="w-full h-full object-cover rounded-full"
                       />
                     </div>
-                    <div className="flex-[2]">
-                      <span className="font-bold tracking-wider">
+                    <div className="flex-1">
+                      <span className="font-bold text-sm sm:text-base tracking-wider">
                         {person.name} <br />
                       </span>
-                      <span className="text-sm tracking-wider">
+                      <span className="text-xs sm:text-sm tracking-wider">
                         {person.job} <br />
                       </span>
-                      <span>⭐⭐⭐⭐⭐</span>
+                      <span className="text-xs sm:text-sm">⭐⭐⭐⭐⭐</span>
                     </div>
                   </div>
-                  <div className="flex flex-col gap-4">
-                    <span className="font-bold text-sm tracking-wider">
+                  <div className="flex flex-col gap-3 sm:gap-4">
+                    <span className="font-bold text-xs sm:text-sm tracking-wider">
                       {person.title}
                     </span>
-                    <p className="text-sm text-gray-500 tracking-wider">
+                    <p className="text-xs sm:text-sm text-gray-500 tracking-wider">
                       {person.detail}
                     </p>
                   </div>
                 </div>
               ))}
             </div>
-
-            {/* <div className="grid grid-cols-4 gap-6">
-              {people.map((person, index) => (
-                <div
-                  key={"second-" + index}
-                  className="flex flex-col gap-8 bg-white transform rotate-y-12 skew-x-[25deg] shadow-2xl rounded-2xl p-8"
-                >
-                  <div className="flex gap-8">
-                    <div className="flex-1 rounded-full">
-                      <img
-                        src={person.image}
-                        alt="pfp"
-                        className="rounded-full"
-                      />
-                    </div>
-                    <div className="flex-[2]">
-                      <span className="font-bold tracking-wider">
-                        {person.name} <br />
-                      </span>
-                      <span className="text-sm tracking-wider">
-                        {person.job} <br />
-                      </span>
-                      <span>⭐⭐⭐⭐⭐</span>
-                    </div>
-                  </div>
-                  <div className="flex flex-col gap-4">
-                    <span className="font-bold text-sm tracking-wider">
-                      {person.title}
-                    </span>
-                    <p className="text-sm text-gray-500 tracking-wider">
-                      {person.detail}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div> */}
           </div>
         </div>
       </section>

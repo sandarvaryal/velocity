@@ -32,43 +32,12 @@ const steps = [
 
 export default function Steps() {
   return (
-    <section className="py-16">
-      {/* <div className="text-center text-white">
-        <h4 className="text-blue-500 uppercase tracking-widest text-sm font-bold">
-          How It Works
-          <span className="inline-block w-12 h-[2px] bg-blue-500 ml-2"></span>
-        </h4>
-        <h2 className="text-3xl md:text-5xl font-bold leading-tight">
-          How Nexus Courier Delivers Your Parcel
-        </h2>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
-        {steps.map((step, index) => (
-          <motion.div
-            key={step.id}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: index * 0.2 }}
-            whileHover={{ scale: 1.05 }}
-            className="relative bg-gray-900 text-white text-center p-6 shadow-lg rounded-lg"
-          >
-            <div className="relative w-24 h-24 mx-auto flex items-center justify-center rounded-full bg-white shadow-xl">
-              {step.icon}
-              <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-sm font-bold px-2 py-1 rounded-full">
-                {step.id}
-              </span>
-            </div>
-            <h3 className="text-lg font-bold mt-4">{step.title}</h3>
-            <p className="text-gray-400 mt-2 text-sm">{step.description}</p>
-          </motion.div>
-        ))}
-      </div> */}
-      <h2 className=" md:text-[2.5rem] text-center font-bold text-gray-900">
+    <section className="py-8 md:py-16" id="Steps">
+      <h2 className="text-2xl md:text-[2.5rem] text-center font-bold text-gray-900">
         How <span className="text-[#F97316]">Velocity</span> Delivers your
         parcel
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-4 mt-12 ml-60 mr-60">
+      <div className="grid grid-cols-1 gap-4 mt-8 md:mt-12 mx-4 md:ml-40 md:mr-40">
         {steps.map((step, index) => (
           <motion.div
             key={step.id}
@@ -77,21 +46,23 @@ export default function Steps() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
             whileHover={{ scale: 1.02 }}
-            className="relative bg-gray-900 text-white p-6 shadow-lg rounded-[1.5rem] flex justify-between"
+            className="relative bg-gray-900 text-white p-4 md:p-6 shadow-lg rounded-[1rem] md:rounded-[1.5rem] flex flex-col md:flex-row justify-between items-center"
           >
-            <div className=" flex-1 h-24 mx-auto flex  rounded-full">
-              <span className="relative w-24 rounded-full bg-white shadow-xl  mx-auto ">
-                <span className="flex justify-center items-center  h-24">
+            <div className="flex-1 h-20 md:h-24 mx-auto flex rounded-full">
+              <span className="relative w-20 md:w-24 rounded-full bg-white shadow-xl mx-auto">
+                <span className="flex justify-center items-center h-20 md:h-24">
                   {step.icon}
                 </span>
-                <span className="absolute -top-2 -right-2 bg-[#F97316] text-white text-sm font-bold px-2 py-1 rounded-full">
+                <span className="absolute -top-2 -right-2 bg-[#F97316] text-white text-xs md:text-sm font-bold px-2 py-1 rounded-full">
                   {step.id}
                 </span>
               </span>
             </div>
-            <div className="flex-3">
-              <h3 className="text-2xl font-bold mt-4">{step.title}</h3>
-              <p className="text-gray-400 mt-2 text-sm">{step.description}</p>
+            <div className="flex-3 mt-4 md:mt-0 md:ml-6 text-center md:text-left">
+              <h3 className="text-xl md:text-2xl font-bold">{step.title}</h3>
+              <p className="text-gray-400 mt-2 text-xs md:text-sm">
+                {step.description}
+              </p>
             </div>
           </motion.div>
         ))}

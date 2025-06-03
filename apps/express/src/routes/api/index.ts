@@ -10,6 +10,8 @@ import editVerification from "./editVerification";
 import editDeparture from "./editDeparture";
 import editDelivered from "./editDelivered";
 import awbExists from "./awbExists";
+import getBlog from "./getBlog";
+import postBlog from "./postBlog";
 
 const api = [
   getShipment,
@@ -24,6 +26,8 @@ const api = [
   editDeparture,
   editDelivered,
   awbExists,
+  getBlog,
+  postBlog,
 ];
 
 export default api;
