@@ -45,18 +45,6 @@ export default function Footer() {
             Our Location
           </a>
         </div> */}
-        <div className="text-sm">
-          <h2 className="">
-            Developed by{" "}
-            <a
-              href="https://www.instagram.com/dexera.tech/?utm_source=ig_web_button_share_sheet"
-              className="font-semibold"
-              style={{ fontFamily: "Playfair" }}
-            >
-              dexera.
-            </a>
-          </h2>
-        </div>
 
         <div className="flex items-center gap-2 mt-4 md:mt-0">
           <img src="/nexus-logo.png" alt="Gütesiegel" className="h-8" />

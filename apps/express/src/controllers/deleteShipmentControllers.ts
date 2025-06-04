@@ -12,6 +12,11 @@ export const deleteShipmentController = async (req: Request, res: Response) => {
   console.log("query", req.query, "param", req.param);
   const data = deleteParamSchema.safeParse(req.params);
 
+  const role = req.user?.role;
+  if (role !== "superAdmin") {
+    return res.status(200).json({ message: "Unauthorized" });
+  }
+
   if (!data.success) {
     return res.status(400).json({
       message: "Invalid params",

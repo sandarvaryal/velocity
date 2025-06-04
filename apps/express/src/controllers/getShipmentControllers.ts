@@ -25,6 +25,9 @@ const filterParamSchema = z.object({
 
 export const getShipmentsController = async (req: Request, res: Response) => {
   const data = filterParamSchema.safeParse(req.query);
+  const role = req.user?.role;
+  const userId = req.user?.id;
+
   if (!data.success) {
     return res.status(400).json({
       message: "Invalid query parameters",
@@ -106,21 +109,56 @@ export const getShipmentsController = async (req: Request, res: Response) => {
   const startIndex = (page - 1) * limit;
 
   if (Object.keys(filterCriteria).length === 0) {
+    //     await prisma.user.findMany({
+    //   where: {
+    //     id: userId,
+    //   },
+    //   include: {
+    //     shipment: {
+    //       skip: startIndex,
+    //       take: limit,
+    //       orderBy: {
+    //         date: "desc",
+    //       },
+    //       include: includeConfig,
+    //     },
+    //   },
+    // });
     try {
-      const shipment = await prisma.shipment.findMany({
-        skip: startIndex,
-        take: limit,
-        orderBy: {
-          date: "desc",
-        },
-        include: includeConfig,
-      });
+      let shipment;
+      let recordNumber;
 
-      const recordNumber = await prisma.shipment.count();
-      const totalPage = Math.ceil(recordNumber / limit);
-      if (!shipment) {
-        return res.status(404).json({ message: "Shipment not found" });
+      if (role === "superAdmin") {
+        shipment = await prisma.shipment.findMany({
+          skip: startIndex,
+          take: limit,
+          orderBy: {
+            date: "desc",
+          },
+          include: includeConfig,
+        });
+        recordNumber = shipment.length;
+      } else {
+        shipment = await prisma.shipment.findMany({
+          where: {
+            userId,
+          },
+          skip: startIndex,
+          take: limit,
+          orderBy: {
+            date: "desc",
+          },
+          include: includeConfig,
+        });
+
+        console.log("shipment", shipment);
+        recordNumber = shipment?.length;
       }
+
+      const totalPage = Math.ceil(recordNumber / limit);
+      // if (!shipment) {
+      //   return res.status(404).json({ message: "Shipment not found" });
+      // }
 
       return res.json({ shipment, totalPage });
     } catch (error) {
@@ -130,12 +168,22 @@ export const getShipmentsController = async (req: Request, res: Response) => {
   }
 
   try {
-    const shipment = await prisma.shipment.findMany({
-      skip: startIndex,
-      take: limit,
-      where: filterCriteria,
-      include: includeConfig,
-    });
+    let shipment;
+    if (role === "superAdmin") {
+      shipment = await prisma.shipment.findMany({
+        skip: startIndex,
+        take: limit,
+        where: filterCriteria,
+        include: includeConfig,
+      });
+    } else {
+      shipment = await prisma.shipment.findMany({
+        skip: startIndex,
+        take: limit,
+        where: { ...filterCriteria, userId },
+        include: includeConfig,
+      });
+    }
     const recordNumber = await prisma.shipment.count({
       where: filterCriteria,
     });
@@ -154,24 +202,51 @@ export const getShipmentsController = async (req: Request, res: Response) => {
 
 export const getShipmentController = async (req: Request, res: Response) => {
   const awbNumber = req.params.awbNumber;
+  const role = req.user?.role;
+  const userId = req.user?.id;
+
+  let shipment;
 
   if (awbNumber) {
     try {
-      const shipment = await prisma.shipment.findUnique({
-        where: {
-          awbNumber: awbNumber,
-        },
-        include: {
-          consignor: true,
-          consignee: true,
-          Boxes: {
-            include: {
-              BoxesContent: true,
+      if (role === "superAdmin") {
+        shipment = await prisma.shipment.findUnique({
+          where: {
+            awbNumber: awbNumber,
+          },
+          include: {
+            consignor: true,
+            consignee: true,
+            Boxes: {
+              include: {
+                BoxesContent: true,
+              },
+            },
+            verificationStatus: true,
+          },
+        });
+      } else {
+        const adminShipment: any = await prisma.user.findMany({
+          where: {
+            id: userId,
+          },
+          select: {
+            shipments: {
+              include: {
+                consignor: true,
+                consignee: true,
+                Boxes: {
+                  include: {
+                    BoxesContent: true,
+                  },
+                },
+                verificationStatus: true,
+              },
             },
           },
-          verificationStatus: true,
-        },
-      });
+        });
+        shipment = adminShipment.shipment;
+      }
 
       if (!shipment) {
         return res.status(404).json({ message: "Shipment not found" });

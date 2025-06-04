@@ -34,3 +34,8 @@ body {
 .animate-marquee {
   animation: marquee-scroll 50s linear infinite;
 }
+
+.ql-editor img {
+  width: full;
+  height: 30rem;
+}

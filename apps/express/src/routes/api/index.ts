@@ -12,6 +12,8 @@ import editDelivered from "./editDelivered";
 import awbExists from "./awbExists";
 import getBlog from "./getBlog";
 import postBlog from "./postBlog";
+import uploadImage from "./uploadImage";
+import getPreData from "./getPreData";
 
 const api = [
   getShipment,
@@ -28,6 +30,8 @@ const api = [
   awbExists,
   getBlog,
   postBlog,
+  uploadImage,
+  getPreData,
 ];
 
 export default api;

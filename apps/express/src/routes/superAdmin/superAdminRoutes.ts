@@ -179,6 +179,11 @@ const registerProps = z.object({
   password: z.string(),
   phone: z.string(),
   role: z.enum(["admin", "superAdmin"]),
+  company: z.string(),
+  country: z.string(),
+  zip: z.string(),
+  state: z.string(),
+  city: z.string(),
 });
 
 router.get("/getUsers", superAdminMiddleware, async (req, res) => {
@@ -284,7 +289,18 @@ router.post("/register", superAdminMiddleware, async (req, res) => {
     return res.status(400).json({ message: "Failed to parse input" });
   }
 
-  const { email, username, password, phone, role } = parsedInput.data;
+  const {
+    email,
+    username,
+    password,
+    phone,
+    role,
+    company,
+    country,
+    zip,
+    state,
+    city,
+  } = parsedInput.data;
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const normalizedEmail = email.toLowerCase();
@@ -307,6 +323,11 @@ router.post("/register", superAdminMiddleware, async (req, res) => {
       password: hashedPassword,
       phone,
       role,
+      company,
+      country,
+      zip,
+      state,
+      city,
     },
   });
 

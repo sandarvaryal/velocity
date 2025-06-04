@@ -68,7 +68,7 @@ function UnprotectedShipments() {
     retry: false,
   });
 
-  const { data, isSuccess, refetch } = useQuery({
+  const { data, isSuccess, refetch, isLoading } = useQuery({
     queryKey: ["shipments", filters],
     queryFn: async () => {
       const response = await axios.get(
@@ -101,7 +101,7 @@ function UnprotectedShipments() {
       setShipments(data.shipment);
 
       data.shipment.forEach((shipment: any) => {
-        const countryCode = shipment.consignee.country.slice(
+        const countryCode = shipment?.consignee?.country?.slice(
           shipment.consignee.country.indexOf("[") + 1,
           shipment.consignee.country.indexOf("]")
         );
@@ -225,7 +225,7 @@ function UnprotectedShipments() {
               <div>No shipments available</div>
             ) : (
               shipments.map((shipment: any, index: number) => {
-                const countryCode = shipment.consignee.country.slice(
+                const countryCode = shipment?.consignee?.country?.slice(
                   shipment.consignee.country.indexOf("[") + 1,
                   shipment.consignee.country.indexOf("]")
                 );
@@ -250,8 +250,8 @@ function UnprotectedShipments() {
                         <FaCopy className="hover:text-gray-400 transition-all" />
                       </button>
                     </div>
-                    <div>{shipment.consignor.name}</div>
-                    <div>{shipment.consignee.name}</div>
+                    <div>{shipment?.consignor?.name}</div>
+                    <div>{shipment?.consignee?.name}</div>
                     <div className="flex gap-4 max-w-48 items-center text-left">
                       {flagUrl ? (
                         <img
@@ -262,37 +262,39 @@ function UnprotectedShipments() {
                       ) : (
                         <MiniSpinner />
                       )}
-                      {shipment.consignee.country}
+                      {shipment?.consignee?.country}
                     </div>
 
                     <div
                       className={`text-xs font-semibold ${
-                        shipment.verificationStatus.shipmentVerified
+                        shipment?.verificationStatus?.shipmentVerified
                           ? "text-green-600"
                           : "text-red-500"
                       }`}
                     >
-                      {shipment.verificationStatus.shipmentVerified
+                      {shipment?.verificationStatus?.shipmentVerified
                         ? "VERIFIED"
                         : "UNVERIFIED"}
                     </div>
                     <div className="flex gap-2 justify-center">
+                      {isSuperAdmin && !superAdminError && (
+                        <button
+                          onClick={() =>
+                            navigate(`/shipments/edit/${shipment?.awbNumber}`)
+                          }
+                          className="hover:underline text-xl cursor-pointer hover:text-purple-400 transition-all"
+                        >
+                          <FaEdit />
+                        </button>
+                      )}
                       <button
-                        onClick={() =>
-                          navigate(`/shipments/edit/${shipment.awbNumber}`)
-                        }
-                        className="hover:underline text-xl cursor-pointer hover:text-purple-400 transition-all"
-                      >
-                        <FaEdit />
-                      </button>
-                      <button
-                        onClick={() => handlePrint(shipment.awbNumber)}
+                        onClick={() => handlePrint(shipment?.awbNumber)}
                         className="text-xl hover:underline cursor-pointer hover:text-[#00AEE4] transition-all"
                       >
                         <MdPrint />
                       </button>
                       <button
-                        onClick={() => handleDownloadExcel(shipment.awbNumber)}
+                        onClick={() => handleDownloadExcel(shipment?.awbNumber)}
                         className="text-lg hover:underline cursor-pointer hover:text-[#00AEE4] transition-all"
                       >
                         <FaDownload />
@@ -327,7 +329,7 @@ function UnprotectedShipments() {
                             className="text-xl cursor-pointer hover:text-[#00AEE4] transition-all"
                             onClick={async () => {
                               const checked =
-                                !shipment.verificationStatus.shipmentVerified;
+                                !shipment?.verificationStatus?.shipmentVerified;
                               try {
                                 await axios.put(
                                   `${import.meta.env.VITE_BACKEND_URL}/api/editVerification/${shipment.id}`,
@@ -346,7 +348,7 @@ function UnprotectedShipments() {
                           >
                             <MdVerified
                               className={`hover:text-emerald-600 ${
-                                shipment.verificationStatus.shipmentVerified
+                                shipment?.verificationStatus?.shipmentVerified
                                   ? "text-emerald-600"
                                   : "text-gray-800"
                               }`}
@@ -356,7 +358,8 @@ function UnprotectedShipments() {
                             className="text-xl cursor-pointer hover:text-[#00AEE4] transition-all"
                             onClick={async () => {
                               const checked =
-                                !shipment.verificationStatus.shipmentDeparture;
+                                !shipment?.verificationStatus
+                                  ?.shipmentDeparture;
                               try {
                                 await axios.put(
                                   `${import.meta.env.VITE_BACKEND_URL}/api/editDeparture/${shipment.id}`,
@@ -375,7 +378,7 @@ function UnprotectedShipments() {
                           >
                             <FaPlaneDeparture
                               className={`hover:text-indigo-600 ${
-                                shipment.verificationStatus.shipmentDeparture
+                                shipment?.verificationStatus?.shipmentDeparture
                                   ? "text-indigo-600"
                                   : "text-gray-800"
                               }`}

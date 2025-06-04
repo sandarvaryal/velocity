@@ -2,18 +2,36 @@ import ShipmentForm from "./components/ShipmentForm";
 import ProtectedWrap from "../hoc/ProtectedWrap";
 import { useLocation } from "react-router-dom";
 import { MdAssignmentAdd } from "react-icons/md";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 function UnprotectedBookShipment() {
   const location = useLocation();
-  const data = location.state?.cloneData || {
-    consignor: {
-      company: "Nexus Courier",
-      country: "[NP] Nepal",
-      zip: "44600",
-      state: "Bagmati Zone",
-      city: "Kathmandu",
-      email: "thenexuscourier@gmail.com",
+  const { data, isError, isLoading } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/getPreData`,
+        {
+          withCredentials: true,
+        }
+      );
+      return response.data;
     },
+  });
+  if (isLoading) {
+    return <>wait</>;
+  }
+  console.log("data yo ho", data);
+  const data1 = location.state?.cloneData || {
+    consignor:
+      // company: "Velocity Core",
+      // country: "[NP] Nepal",
+      // zip: "44600",
+      // state: "Bagmati Zone",
+      // city: "Kathmandu",
+      // email: "thenexuscourier@gmail.com",
+      data,
   };
   return (
     <div className="max-w-[100rem] m-auto px-6 relative pt-2 mb-24">
@@ -22,7 +40,7 @@ function UnprotectedBookShipment() {
           <MdAssignmentAdd /> Book Shipment
         </span>
       </h1>
-      <ShipmentForm formFor={"BookShipment"} data={data} />
+      <ShipmentForm formFor={"BookShipment"} data={data1} />
     </div>
   );
 }

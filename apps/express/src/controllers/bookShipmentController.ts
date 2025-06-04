@@ -144,8 +144,9 @@ export const createShipmentController = async (req: Request, res: Response) => {
       };
     }
 
+    const userId = req.user?.id;
     const createdShipment = await prisma.shipment.create({
-      data: shipmentDataConfig(variables),
+      data: { ...shipmentDataConfig(variables), userId },
     });
 
     if (!createdShipment) {

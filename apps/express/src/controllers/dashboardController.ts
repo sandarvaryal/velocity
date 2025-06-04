@@ -33,7 +33,9 @@ export const getDashboardController = async (req: Request, res: Response) => {
     verificationStatus: true,
   };
 
-  const filterCriteria: any = {};
+  const userId = req.user?.id;
+
+  const filterCriteria: any = { userId };
 
   if (dateFrom || dateTo) {
     filterCriteria.date = {};
@@ -58,6 +60,7 @@ export const getDashboardController = async (req: Request, res: Response) => {
       include: includeConfig,
     });
     const latestShipments = await prisma.shipment.findMany({
+      where: { userId },
       take: 10,
       orderBy: { date: "desc" },
       include: includeConfig,

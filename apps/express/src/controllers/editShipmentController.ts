@@ -8,6 +8,10 @@ const prisma = new PrismaClient();
 
 export const editShipmentController = async (req: Request, res: Response) => {
   const awbNumber = req.params.awbNumber;
+  const role = req.user?.role;
+  if (role !== "superAdmin") {
+    return res.status(403).json({ message: "Unauthorized" });
+  }
 
   if (!awbNumber) {
     return res.status(400).json({ message: "Invalid or missing AWB number" });

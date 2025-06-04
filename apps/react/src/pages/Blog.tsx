@@ -21,9 +21,9 @@ export function Blog() {
   if (isError) {
     toast.error("Error fething Users");
   }
-  //   if (isLoading) {
-  //     return <>wait</>;
-  //   }
+  if (isLoading) {
+    return <>wait</>;
+  }
   const navigate = useNavigate();
 
   console.log("blog", data);
@@ -35,7 +35,7 @@ export function Blog() {
           title: {data?.blog[0]?.title ? data.blog[0].title : ""} description:{" "}
         </span>
 
-        <div dangerouslySetInnerHTML={{ __html: data.blog[0].description }} />
+        <div dangerouslySetInnerHTML={{ __html: data.blog[0]?.description }} />
       </div>
     </>
   );

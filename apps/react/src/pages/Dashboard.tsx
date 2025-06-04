@@ -1209,18 +1209,6 @@ function UnprotectedDashboard() {
           </ResponsiveContainer>
         </div>
       </div>
-      <div className="mt-2 text-gray-700  ">
-        <h2>
-          Developed by{" "}
-          <a
-            href="https://www.instagram.com/dexera.tech/?utm_source=ig_web_button_share_sheet"
-            className="font-semibold"
-            style={{ fontFamily: "Playfair" }}
-          >
-            dexera. (v1.0.0)
-          </a>
-        </h2>
-      </div>
     </div>
   );
 }
