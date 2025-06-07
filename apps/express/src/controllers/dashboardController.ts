@@ -34,8 +34,14 @@ export const getDashboardController = async (req: Request, res: Response) => {
   };
 
   const userId = req.user?.id;
+  const role = req.user?.role;
+  let filterCriteria: any;
 
-  const filterCriteria: any = { userId };
+  if (role === "superAdmin") {
+    filterCriteria = {};
+  } else {
+    filterCriteria = { userId };
+  }
 
   if (dateFrom || dateTo) {
     filterCriteria.date = {};
@@ -60,14 +66,14 @@ export const getDashboardController = async (req: Request, res: Response) => {
       include: includeConfig,
     });
     const latestShipments = await prisma.shipment.findMany({
-      where: { userId },
+      where: {},
       take: 10,
       orderBy: { date: "desc" },
       include: includeConfig,
     });
 
     if (shipment.length === 0) {
-      return res.status(404).json({ message: "No Shipment found" });
+      return res.status(200).json({ message: "No Shipment found" });
     }
 
     //logicccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -150,7 +156,7 @@ export const getDashboardController = async (req: Request, res: Response) => {
     };
 
     // return res.json({ shipment });
-    return res.json(responseObj);
+    return res.status(200).json(responseObj);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal Server Error" });

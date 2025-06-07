@@ -18,12 +18,12 @@ const ProtectedWrap = (WrappedComponent: React.ComponentType) => {
       retry: false,
     });
 
-    useEffect(() => {
-      if (!isLoading && isError) {
-        // toast.error("Unauthorized");
-        navigate("/login");
-      }
-    }, [isError, isLoading]);
+    // useEffect(() => {
+    if (!isLoading && isError) {
+      // toast.error("Unauthorized");
+      navigate("/login");
+    }
+    // }, [isError, isLoading]);
 
     return <WrappedComponent />;
   };

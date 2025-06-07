@@ -777,7 +777,7 @@ import {
   Area,
   Cell,
 } from "recharts";
-import MiniSpinner from "../components/MiniSpinner";
+import MiniSpinner from "../components/main/MiniSpinner";
 
 // import { FaPlaneDeparture, FaUsers } from "react-icons/fa";
 import { FaPlaneDeparture } from "react-icons/fa";
@@ -891,7 +891,7 @@ function UnprotectedDashboard() {
   useEffect(() => {
     if (dateTo && !dateFrom) {
       toast.error("Please select a 'from' date first.");
-      setDateTo(""); // Reset 'to' date if 'from' date is not set
+      setDateTo("");
     } else if (dateFrom && dateTo) {
       setFilters((prevFilters) => ({
         ...prevFilters,
@@ -902,7 +902,7 @@ function UnprotectedDashboard() {
   }, [dateFrom, dateTo]);
 
   return (
-    <div className=" max-w-[100rem] m-auto px-6 mb-24 pt-2">
+    <div className="m-auto px-6 mb-24 pt-2">
       <div className="flex flex-col">
         <div className="flex flex-col sm:flex-row my-2 gap-2 justify-between">
           <div className="grid grid-cols-2 justify-between gap-4">
@@ -1113,10 +1113,10 @@ function UnprotectedDashboard() {
                   <span>Destination Country</span>
                   <span>Status</span>
                 </div>
-                {data?.latestShipments.length === 0 ? (
+                {data?.latestShipments?.length === 0 ? (
                   <div>No shipments available</div>
                 ) : (
-                  data?.latestShipments.map(
+                  data?.latestShipments?.map(
                     (shipment: Shipment, index: number) => {
                       const countryCode = shipment.consignee.country.slice(
                         shipment.consignee.country.indexOf("[") + 1,

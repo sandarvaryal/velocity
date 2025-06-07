@@ -3,7 +3,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 // import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import ConfirmationModal from "../../../components/ConfirmationModal";
+import ConfirmationModal from "../../../components/main/ConfirmationModal";
 
 export default function RenderUserInstance({
   user,

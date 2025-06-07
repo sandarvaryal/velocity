@@ -34,7 +34,7 @@ function UnprotectedBookShipment() {
       data,
   };
   return (
-    <div className="max-w-[100rem] m-auto px-6 relative pt-2 mb-24">
+    <div className="m-auto px-6 relative pt-2 mb-24">
       <h1 className=" font-semibold text-gray-700 flex items-center gap-2 pt-2 ">
         <span className="text-lg flex items-center gap-1 sm:text-xl">
           <MdAssignmentAdd /> Book Shipment

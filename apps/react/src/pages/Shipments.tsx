@@ -16,9 +16,9 @@ import { FaDownload } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
-import MiniSpinner from "../components/MiniSpinner";
+import MiniSpinner from "../components/main/MiniSpinner";
 import { RiHome9Fill } from "react-icons/ri";
-import ConfirmationModal from "../components/ConfirmationModal";
+import ConfirmationModal from "../components/main/ConfirmationModal";
 import { FaCopy } from "react-icons/fa6";
 
 const fetchFlagUrl = async (countryCode: string) => {
