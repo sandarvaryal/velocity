@@ -102,6 +102,13 @@
 
 import { useEffect, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export function InvoiceKeys({ data }: { data: any }) {
   const { control, setValue, register } = useFormContext();
@@ -177,20 +184,40 @@ export function InvoiceKeys({ data }: { data: any }) {
     }
   }, [addedTotal, data.invoiceTotal, setValue]);
 
-  const handleDivisionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value;
+  const handleDivisionChange = (e: any) => {
+    const value = e;
     setSelectedDivision(value);
     setValue("division", value);
   };
+  // const handleDivisionChange = (e: any) => {
+  //   const value = e.target.value;
+  //   setSelectedDivision(value);
+  //   setValue("division", value);
+  // };
 
   return (
-    <div className="bg-neutral-50  border border-gray-200  p-4 mt-4  ">
+    <div className=" p-4 rounded-md">
       <div className="flex flex-col">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 justify-between">
           <label htmlFor="division" className="text-sm font-semibold ">
             Division:
           </label>
-          <select
+          <Select
+            onValueChange={(options: any) => {
+              handleDivisionChange(options);
+            }}
+            {...register("division")}
+          >
+            <SelectTrigger className=" border border-gray-300 px-2 py-1 focus:ring-2  focus:border-transparent text-gray-500">
+              <SelectValue placeholder="Division" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="5000">5000</SelectItem>
+              <SelectItem value="5500">5500</SelectItem>
+              <SelectItem value="6000">6000</SelectItem>
+            </SelectContent>
+          </Select>
+          {/* <select
             id="division"
             {...register("division")}
             className="border border-gray-300 bg-white w-full  px-3 "
@@ -200,10 +227,24 @@ export function InvoiceKeys({ data }: { data: any }) {
             <option value="5000">5000</option>
             <option value="5500">5500</option>
             <option value="6000">6000</option>
-          </select>
+          </select> */}
+          {/* <select
+            id="division"
+            {...register("division")}
+            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none"
+            value={selectedDivision ?? ""}
+            onChange={handleDivisionChange}
+          >
+            <option value="" disabled>
+              Select a division
+            </option>
+            <option value="5000">5000</option>
+            <option value="5500">5500</option>
+            <option value="6000">6000</option>
+          </select> */}
         </div>
 
-        <div className=" border-gray-200 pt-4 ">
+        <div className=" border-gray-200 pt-4">
           <div className="flex justify-between items-center mb-2">
             <span className="text-sm ">Total Boxes:</span>
             <span className="text-sm">{addedBoxes ? addedBoxes : ""}</span>
@@ -228,12 +269,13 @@ export function InvoiceKeys({ data }: { data: any }) {
           </div>
           <div className="flex justify-between items-center border-t border-gray-200 pt-4">
             <span className="text-sm font-semibold">Total:</span>
-            {/* <span className="text-sm">{addedTotal ? addedTotal : ""}</span> */}
+            <span className="text-sm">{addedTotal ? addedTotal : ""}</span>
             <input
               {...register("invoiceTotal")}
               className="border border-gray-300 bg-white  w-full  px-3 "
               type="number"
               step="any"
+              hidden
             />
           </div>
         </div>

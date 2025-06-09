@@ -11,6 +11,7 @@ import { CreateUser } from "./pages/CreateUser";
 import { Blog } from "./pages/Blog";
 import Test from "./pages/Test";
 import { TestShipment } from "./pages/TestShipment";
+import { TestBookShipment } from "./pages/TestBookShipment";
 
 import Footer from "./components/main/Footer";
 import { Dashboard } from "./pages/Dashboard";
@@ -19,6 +20,7 @@ import { BookShipment } from "./pages/BookShipment";
 import { CreateBlog } from "./pages/CreateBlog";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { TestDashboard } from "./pages/TestDashboard";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const { isError } = useQuery({
@@ -64,6 +66,8 @@ const router = createBrowserRouter([
         path: "testShipment",
         element: <TestShipment />,
       },
+      { path: "testDashboard", element: <TestDashboard /> },
+      { path: "testBookShipment", element: <TestBookShipment /> },
     ],
   },
 
@@ -72,10 +76,10 @@ const router = createBrowserRouter([
     element: <Layout children={<Home />} />,
   },
 
-  //   {
-  //     path: "/login",
-  //     element: <Layout children={<Login />} />,
-  //   },
+  {
+    path: "/login",
+    element: <Layout children={<Login />} />,
+  },
   //   {
   //     path: "/register",
   //     element: <Layout children={<Register />} />,

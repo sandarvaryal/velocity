@@ -318,14 +318,14 @@ export default function ConsignorConsigneeForm({
           <FormInput name="email" label="Email" formFor={formFor} data={data} />
         </div>
 
-        <div className="flex items-center gap-1  ">
-          <span className="px-4 py-1 border text-sm border-gray-300 bg-white text-gray-700 w-full">
+        <div className="flex items-center gap-1">
+          <span className="overflow-x-scroll no-scrollbar px-4 py-2 border text-sm border-gray-300 bg-sidebar text-muted-foreground/50 w-full h-9 rounded-[0.5rem]">
             {formattedAddress || "No address"}
           </span>
           <button
             type="button"
             onClick={handleSearch}
-            className="p-2 text-white  bg-[#00AEE4] hover:bg-[#0089e4] disabled:bg-gray-400  transition-all cursor-pointer"
+            className="py-2 px-4 bg-amber-500 h-9 hover:bg-amber-600 disabled:bg-gray-400  transition-all cursor-pointer rounded-[0.5rem]"
             disabled={!formattedAddress}
           >
             <FaSearch className="text-sm" />

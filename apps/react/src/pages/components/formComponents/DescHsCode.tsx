@@ -141,6 +141,7 @@ import { useEffect, useState } from "react";
 import { useFormContext, FieldValues } from "react-hook-form";
 import * as XLSX from "xlsx";
 import CreatableSelect from "react-select/creatable";
+import { Input } from "@/components/ui/input";
 
 interface ProductHsCodeProps {
   boxIndex: number;
@@ -225,12 +226,91 @@ const DescHsCode = ({ boxIndex, index }: ProductHsCodeProps) => {
     boxErrors?.[boxIndex]?.BoxesContent?.[index]?.HsCode?.message ?? "";
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const shadcnStyles = {
+    control: (baseStyles: any, state: any) => ({
+      ...baseStyles,
+      borderRadius: "0.375rem",
+      borderColor: state.isFocused ? "#f97316" : "#d1d5db",
+      borderWidth: "1px",
+      backgroundColor: "white",
+      boxShadow: state.isFocused
+        ? "2PX 2px 10px 2px rgba(249, 115, 22, 0.2)"
+        : "0 1px 2px rgba(0, 0, 0, 0.05)",
+      transition: "all 150ms ease-in-out",
+
+      fontSize: "0.875rem",
+      lineHeight: "1.25rem",
+      "&:hover": {
+        borderColor: state.isFocused ? "#f97316" : "#fed7aa",
+      },
+    }),
+    menu: (baseStyles: any) => ({
+      ...baseStyles,
+      marginTop: "0.25rem",
+      backgroundColor: "white",
+      border: "1px solid #e5e7eb",
+      borderRadius: "0.375rem",
+      boxShadow:
+        "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)",
+      animation: "slideIn 0.2s ease-out",
+      zIndex: 10,
+    }),
+    option: (
+      baseStyles: any,
+      { isSelected, isFocused }: { isSelected: any; isFocused: any }
+    ) => ({
+      ...baseStyles,
+      padding: "0.5rem 1rem",
+      fontSize: "0.875rem",
+      cursor: "pointer",
+      backgroundColor: isSelected
+        ? "#f97316"
+        : isFocused
+          ? "#fff7ed"
+          : "transparent",
+      color: isSelected ? "white" : "#111827",
+      transition: "background-color 150ms ease-in-out",
+      "&:hover": {
+        backgroundColor: isSelected ? "#f97316" : "#fff7ed",
+      },
+    }),
+    singleValue: (baseStyles: any) => ({
+      ...baseStyles,
+      color: "#111827",
+      fontSize: "0.875rem",
+    }),
+    placeholder: (baseStyles: any) => ({
+      ...baseStyles,
+      color: "#9ca3af",
+      fontSize: "0.875rem",
+    }),
+    dropdownIndicator: (
+      baseStyles: any,
+      { isFocused }: { isFocused: any }
+    ) => ({
+      ...baseStyles,
+      color: isFocused ? "#f97316" : "#9ca3af",
+      transition: "color 150ms ease-in-out",
+      "&:hover": {
+        color: "#f97316",
+      },
+    }),
+    indicatorSeparator: () => ({
+      display: "none",
+    }),
+    input: (baseStyles: any) => ({
+      ...baseStyles,
+      color: "#111827",
+      fontSize: "0.875rem",
+    }),
+  };
 
   return (
     <>
       <div className="relative">
         <CreatableSelect
-          className={`h-full ${errorMessageDesc ? "border-red-500" : "border border-gray-400"}`}
+          styles={shadcnStyles}
+          className={`h-full ${errorMessageDesc ? "border-red-500" : ""}`}
           value={
             selectedProduct
               ? { label: selectedProduct, value: selectedProduct }
@@ -256,27 +336,37 @@ const DescHsCode = ({ boxIndex, index }: ProductHsCodeProps) => {
             }
           }}
           menuPortalTarget={document.body}
-          styles={{
-            menuPortal: (base) => ({ ...base, zIndex: 9999 }),
-            menu: (base) => ({
-              ...base,
-              width: "max-content",
-              minWidth: "100%",
-            }),
-            control: (base) => ({
-              ...base,
-              height: "100%",
-              minHeight: "40px",
-              border: "none",
-              boxShadow: "none",
-            }),
-          }}
+          // styles={{
+          //   menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+          //   menu: (base) => ({
+          //     ...base,
+          //     width: "max-content",
+          //     minWidth: "100%",
+          //   }),
+          //   control: (base) => ({
+          //     ...base,
+          //     height: "100%",
+          //     minHeight: "40px",
+          //     border: "none",
+          //     boxShadow: "none",
+          //   }),
+          // }}
         />
       </div>
 
-      <input
+      {/* <input
         type="text"
-        className={`border p-2 w-full text-center ${errorMessageHs ? "border-red-500" : " border border-gray-400"}`}
+        className={`border p-2 w-full text-center ${errorMessageHs ? "border-red-500" : ""}`}
+        value={selectedHsCode}
+        {...register(fieldNameHsCode)}
+        onChange={(e) => {
+          const newValue = e.target.value;
+          setValue(fieldNameHsCode, newValue);
+        }}
+      /> */}
+      <Input
+        type="text"
+        className={`p-2 w-full text-center border-2 ${errorMessageHs ? "border-destructive" : ""}`}
         value={selectedHsCode}
         {...register(fieldNameHsCode)}
         onChange={(e) => {

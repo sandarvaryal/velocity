@@ -2,6 +2,7 @@ import FormInputBoxContent from "./formComponents/FormInputBoxContent";
 import { useFormContext } from "react-hook-form";
 import { LogicBoxContentId } from "../../util/LogicBoxContentId";
 import DescHsCode from "./formComponents/DescHsCode";
+import { Button } from "@/components/ui/button";
 
 export default function BoxContent({
   boxInstance,
@@ -52,12 +53,12 @@ export default function BoxContent({
   );
 
   return (
-    <div className="overflow-x-scroll border-gray-300 rounded-md">
+    <div className="overflow-x-scroll no-scrollbar border-gray-300 rounded-md">
       <h3 className="font-semibold mt-4 mb-2 text-lg">Boxes Content</h3>
 
-      <div className="min-w-max sm:min-w-fit">
+      <div className="min-w-max sm:min-w-fit flex flex-col gap-2">
         {/* Header */}
-        <div className="grid grid-cols-[10rem_20rem_1fr_1fr_1fr_1fr_1fr_1fr] text-center gap-2 bg-gray-100 p-2 w-full font-semibold text-sm shadow border-b border-gray-300">
+        <div className="grid grid-cols-[10rem_20rem_1fr_1fr_1fr_1fr_1fr_1fr] text-center gap-2 bg-sidebar border-2 rounded-2xl p-2 w-full font-semibold text-sm shadow">
           <span>BOX AWB No</span>
           <span>Description</span>
           <span>HS Code</span>
@@ -72,21 +73,28 @@ export default function BoxContent({
         {boxInstance.map((box: any, boxIndex: number) => {
           const boxAwbNumber = watch(`boxes[${boxIndex}].boxAwbNumber`);
           return (
-            <div key={box.id} className="mb-6">
+            <div key={box.id} className="mb-6 flex flex-col gap-2">
               {/* Box Header */}
-              <div className="grid px-2 grid-cols-[10rem_20rem_1fr_1fr_1fr_1fr_1fr_1fr] text-center gap-2 bg-gray-100 items-center ">
-                <span className=" border-y w-full  h-full flex items-center justify-center border-gray-300  outline-none">
+              <div className="grid px-2 border-2 rounded-2xl grid-cols-[10rem_20rem_1fr_1fr_1fr_1fr_1fr_1fr] text-center gap-2 bg-sidebar items-center ">
+                <span className=" border-y w-full  h-full flex items-center justify-center outline-none bg-sidebar">
                   {formFor === "BookShipment"
                     ? `BOX-${boxIndex + 1}`
                     : boxAwbNumber}
                 </span>
                 <button
                   type="button"
-                  className="border px-2 py-1 text-[#06a7dd] cursor-pointer hover:bg-blue-100  transition duration-150"
+                  className=" px-2 py-1  cursor-pointer border-primary hover:bg-primary  transition duration-150 rounded-2xl border-2"
                   onClick={() => handleAddDetail(box.id)}
                 >
                   Add Detail
                 </button>
+                {/* <Button
+                  type="button"
+                  className="px-2 py-1 cursor-pointer transition duration-150 rounded-2xl border-2"
+                  onClick={() => handleAddDetail(box.id)}
+                >
+                  Add Detail
+                </Button> */}
               </div>
 
               {/* Box Content */}
@@ -100,7 +108,9 @@ export default function BoxContent({
                   >
                     <LogicBoxContentId boxIndex={boxIndex} index={index} />
 
-                    <span>{index + 1}</span>
+                    <span className="w-full border-2 h-full flex items-center justify-center outline-none bg-sidebar rounded-2xl">
+                      {index + 1}
+                    </span>
 
                     <DescHsCode boxIndex={boxIndex} index={index} />
 
@@ -130,7 +140,7 @@ export default function BoxContent({
                     />
 
                     <button
-                      className="border px-2 h-full text-red-500 cursor-pointer hover:bg-red-100  transition duration-150"
+                      className="border px-2 h-full border-red-500 text-red-500 cursor-pointer hover:bg-red-500 hover:text-sidebar rounded-2xl  transition duration-150"
                       onClick={() =>
                         handleDeleteDetail(box.id, detail.id, boxIndex, index)
                       }
@@ -143,7 +153,7 @@ export default function BoxContent({
             </div>
           );
         })}
-        <div className="grid grid-cols-[10rem_20rem_1fr_1fr_1fr_1fr_1fr_1fr] text-center gap-2 bg-gray-100 min-h-8 w-full  items-center  p-2  text-sm shadow border-b border-gray-300">
+        <div className="rounded-2xl border-2 grid grid-cols-[10rem_20rem_1fr_1fr_1fr_1fr_1fr_1fr] text-center gap-2 bg-sidebar min-h-8 w-full  items-center  p-2  text-sm shadow">
           <span className="font-semibold">Total</span>
           <span></span>
           <span></span>

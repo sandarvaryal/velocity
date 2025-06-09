@@ -81,6 +81,7 @@
 import { useEffect } from "react";
 import { useFormContext, FieldValues } from "react-hook-form";
 import fieldConfigs from "../../../config/fieldConfig";
+import { Input } from "@/components/ui/input";
 
 interface FormInputDetailProps {
   boxIndex: number;
@@ -132,7 +133,7 @@ export default function FormInputBoxContent({
     if (name === "total") {
       return (
         <>
-          <span className="px-1 text-center py-2 bg-neutral-50 border border-gray-300">
+          <span className="px-1 text-center py-2 rounded-2xl bg-sidebar border-2">
             {computedTotal}
           </span>
           <input type="hidden" {...register(fieldName)} readOnly />
@@ -141,9 +142,15 @@ export default function FormInputBoxContent({
     }
 
     return (
-      <input
+      // <input
+      //   {...register(fieldName)}
+      //   className={`border px-1 text-center py-2 w-full ${errorMessage ? "border-red-500" : " border border-gray-300"}`}
+      //   type={fieldType}
+      //   step={fieldType === "number" ? "any" : undefined}
+      // />
+      <Input
         {...register(fieldName)}
-        className={`border px-1 text-center py-2 w-full ${errorMessage ? "border-red-500" : " border border-gray-300"}`}
+        className={`px-1 text-center py-2 w-full border-2 ${errorMessage ? "border-destructive" : ""}`}
         type={fieldType}
         step={fieldType === "number" ? "any" : undefined}
       />

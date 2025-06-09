@@ -149,6 +149,85 @@ const LocationInput = ({ name, label, formFor, data }: LocationInputProps) => {
 
   const errorMessage = (errors?.[formFor] as FieldValues)?.[name]?.message;
 
+  const shadcnStyles = {
+    control: (baseStyles: any, state: any) => ({
+      ...baseStyles,
+      borderRadius: "0.375rem",
+      borderColor: state.isFocused ? "#f97316" : "#d1d5db",
+      borderWidth: "1px",
+      backgroundColor: "white",
+      boxShadow: state.isFocused
+        ? "2PX 2px 10px 2px rgba(249, 115, 22, 0.2)"
+        : "0 1px 2px rgba(0, 0, 0, 0.05)",
+      transition: "all 150ms ease-in-out",
+
+      fontSize: "0.875rem",
+      lineHeight: "1.25rem",
+      "&:hover": {
+        borderColor: state.isFocused ? "#f97316" : "#fed7aa",
+      },
+    }),
+    menu: (baseStyles: any) => ({
+      ...baseStyles,
+      marginTop: "0.25rem",
+      backgroundColor: "white",
+      border: "1px solid #e5e7eb",
+      borderRadius: "0.375rem",
+      boxShadow:
+        "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)",
+      animation: "slideIn 0.2s ease-out",
+      zIndex: 10,
+    }),
+    option: (
+      baseStyles: any,
+      { isSelected, isFocused }: { isSelected: any; isFocused: any }
+    ) => ({
+      ...baseStyles,
+      padding: "0.5rem 1rem",
+      fontSize: "0.875rem",
+      cursor: "pointer",
+      backgroundColor: isSelected
+        ? "#f97316"
+        : isFocused
+          ? "#fff7ed"
+          : "transparent",
+      color: isSelected ? "white" : "#111827",
+      transition: "background-color 150ms ease-in-out",
+      "&:hover": {
+        backgroundColor: isSelected ? "#f97316" : "#fff7ed",
+      },
+    }),
+    singleValue: (baseStyles: any) => ({
+      ...baseStyles,
+      color: "#111827",
+      fontSize: "0.875rem",
+    }),
+    placeholder: (baseStyles: any) => ({
+      ...baseStyles,
+      color: "#9ca3af",
+      fontSize: "0.875rem",
+    }),
+    dropdownIndicator: (
+      baseStyles: any,
+      { isFocused }: { isFocused: any }
+    ) => ({
+      ...baseStyles,
+      color: isFocused ? "#f97316" : "#9ca3af",
+      transition: "color 150ms ease-in-out",
+      "&:hover": {
+        color: "#f97316",
+      },
+    }),
+    indicatorSeparator: () => ({
+      display: "none",
+    }),
+    input: (baseStyles: any) => ({
+      ...baseStyles,
+      color: "#111827",
+      fontSize: "0.875rem",
+    }),
+  };
+
   return (
     // <div className="form-group">
     //   <label htmlFor={fieldName}>{label}</label>
@@ -169,11 +248,12 @@ const LocationInput = ({ name, label, formFor, data }: LocationInputProps) => {
     //   {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
     // </div>
 
-    <div className="form-group flex sm:items-center flex-col sm:flex-row">
-      <label htmlFor={fieldName} className="w-[40%]">
+    <div className="form-group flex sm:items-center flex-col sm:flex-col gap-2">
+      <label htmlFor={fieldName} className="w-[40%] self-start">
         {label}
       </label>
       <CreatableSelect
+        styles={shadcnStyles}
         value={getCurrentOption()}
         options={getOptions()}
         onInputChange={(value) =>

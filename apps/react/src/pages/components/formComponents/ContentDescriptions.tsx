@@ -1,3 +1,4 @@
+import { Input } from "@/components/ui/input";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
@@ -27,10 +28,16 @@ export default function ContentDescriptions({ data }: FormInputProps) {
 
   return (
     <div>
-      <input
+      {/* <input
         {...register(fieldName)}
         type="text"
         className="flex flex-wrap items-center bg-gray-50 min-h-11 h-full    px-2 py-1 outline-none w-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+        placeholder="Enter Boxes Description"
+      /> */}
+      <Input
+        {...register(fieldName)}
+        type="text"
+        className="flex flex-wrap items-center min-h-11 h-full px-2 py-1 w-full transition-all bg-sidebar"
         placeholder="Enter Boxes Description"
       />
       {/* {errorMessage && <p className="text-red-500 text-xs">{errorMessage}</p>} */}

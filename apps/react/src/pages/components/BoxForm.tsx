@@ -264,6 +264,7 @@ import BoxContent from "./BoxContent";
 import FormInputBox from "./formComponents/FormInputBox";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import ContentDescriptions from "./formComponents/ContentDescriptions";
+import { Button } from "@/components/ui/button";
 
 export default function BoxForm({
   data,
@@ -272,6 +273,7 @@ export default function BoxForm({
   data: any;
   formFor: "BookShipment" | "EditShipment";
 }) {
+  // const [boxInstance, setBoxInstance] = useState(data?.Boxes || []);
   const [boxInstance, setBoxInstance] = useState(data?.Boxes || []);
   const { setValue } = useFormContext();
   const { control } = useFormContext();
@@ -416,24 +418,31 @@ export default function BoxForm({
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-[4fr_1fr] items-center gap-4 min-h-11 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-[4fr_1fr] items-center gap-4 min-h-11 mb-4 mt-5">
         {/* <span className="border flex flex-wrap items-center bg-neutral-50 min-h-11 h-full border-gray-300   px-2 py-1 outline-none w-full">
           {boxesContentValues}
         </span> */}
         <ContentDescriptions data={data} />
         <button
           type="button"
-          className="px-4 py-1  text-white h-full font-semibold bg-[#00AEE4] transition-all hover:bg-[#0089e4] cursor-pointer"
+          className="px-2 py-1  cursor-pointer border-primary hover:bg-primary  transition duration-150 rounded-2xl border-2"
           onClick={handleAddBoxInstance}
         >
           Add new box
         </button>
+        {/* <Button
+          type="button"
+          className="px-4 py-1 text-white h-full font-semibold cursor-pointer transition-all"
+          onClick={handleAddBoxInstance}
+        >
+          Add new box
+        </Button> */}
       </div>
 
-      <div className="overflow-x-scroll">
-        <div className="min-w-max sm:min-w-fit">
+      <div className="overflow-x-scroll no-scrollbar">
+        <div className="min-w-max sm:min-w-fit flex flex-col gap-2">
           {/* Header */}
-          <div className="grid grid-cols-8 gap-2 text-center bg-gray-100 p-2 rounded-md font-semibold text-sm w-full">
+          <div className="grid grid-cols-8 gap-2 text-center bg-sidebar border-2 p-2 rounded-2xl font-semibold text-sm w-full">
             <span>BOX AWB No</span>
             <span>Len(cm)</span>
             <span>Width(cm)</span>
@@ -447,7 +456,7 @@ export default function BoxForm({
           {/* Data Rows */}
           {boxInstance.map((box: any, index: number) => (
             <div key={box.id} className="grid grid-cols-8 text-center gap-2 ">
-              <div className="border   border-gray-300  flex items-center justify-center  bg-gray-100">
+              <div className="flex items-center justify-center border-2 rounded-2xl">
                 <FormInputBox
                   index={index}
                   name="boxAwbNumber"
@@ -455,14 +464,14 @@ export default function BoxForm({
                   formFor={formFor}
                 />
               </div>
-              <div className="border flex items-center justify-center  border-gray-300 ">
+              <div className="flex items-center justify-center border-2 rounded-2xl">
                 <FormInputBox
                   index={index}
                   name="lengthCm"
                   value={box.lengthCm}
                 />
               </div>
-              <div className="border flex items-center justify-center  border-gray-300 ">
+              <div className="flex items-center justify-center border-2 rounded-2xl">
                 {" "}
                 <FormInputBox
                   index={index}
@@ -470,28 +479,28 @@ export default function BoxForm({
                   value={box.widthCm}
                 />
               </div>
-              <div className="border flex items-center justify-center  border-gray-300 ">
+              <div className="flex items-center justify-center border-2 rounded-2xl">
                 <FormInputBox
                   index={index}
                   name="heightCm"
                   value={box.heightCm}
                 />
               </div>
-              <div className="border flex items-center justify-center  border-gray-300 ">
+              <div className="flex items-center justify-center border-2 rounded-2xl">
                 <FormInputBox
                   index={index}
                   name="actualWeightKg"
                   value={box.actualWeightKg}
                 />
               </div>
-              <div className="border flex items-center justify-center border-gray-300  bg-gray-100">
+              <div className="flex items-center justify-center border-2 rounded-2xl">
                 <FormInputBox
                   index={index}
                   name="volumetricWeightKg"
                   value={box.volumetricWeightKg}
                 />
               </div>
-              <div className="border flex items-center justify-center border-gray-300  bg-gray-100">
+              <div className="flex items-center justify-center border-2 rounded-2xl">
                 <FormInputBox
                   index={index}
                   name="chargeableWeightKg"
@@ -499,7 +508,7 @@ export default function BoxForm({
                 />
               </div>
               <button
-                className="border px-2 py-1 text-red-500 cursor-pointer"
+                className="border border-red-500 px-2 h-full text-red-500 cursor-pointer hover:bg-red-500 hover:text-sidebar rounded-2xl  transition duration-150"
                 onClick={() => handleDeleteBoxInstance(box.id, index)}
               >
                 Delete

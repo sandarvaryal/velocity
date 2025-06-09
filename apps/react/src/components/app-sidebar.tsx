@@ -152,6 +152,12 @@ const data = {
       url: "/test/testShipment",
       icon: Map,
     },
+    {
+      name: "testDashboard",
+      url: "/test/testDashboard",
+      icon: PieChart,
+    },
+    { name: "testBookShipment", url: "/test/testBookShipment", icon: Frame },
   ],
 };
 
