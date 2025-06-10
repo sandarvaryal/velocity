@@ -1,6 +1,6 @@
 import {
   Folder,
-  MoreHorizontal,
+  // MoreHorizontal,
   Share,
   Trash2,
   type LucideIcon,
@@ -11,13 +11,13 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
+  // DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
   SidebarGroup,
-  SidebarGroupLabel,
+  // SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuAction,
+  // SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,

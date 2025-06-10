@@ -1,24 +1,22 @@
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const textVariants = {
-  hidden: { opacity: 0 },
-  visible: (i: number) => ({
-    opacity: 1,
-    transition: {
-      delay: i * 0.05,
-      duration: 0.6,
-      ease: "easeOut",
-    },
-  }),
-};
+// const textVariants = {
+//   hidden: { opacity: 0 },
+//   visible: (i: number) => ({
+//     opacity: 1,
+//     transition: {
+//       delay: i * 0.05,
+//       duration: 0.6,
+//       ease: "easeOut",
+//     },
+//   }),
+// };
 
 const Hero: React.FC = () => {
-  const headingText = "Nexus Export Trade Pvt. Ltd.";
-  const subText = "The Nexus Courier";
   const navigate = useNavigate();
 
   const [searchInput, setSearchInput] = useState("");

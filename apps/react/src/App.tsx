@@ -1,13 +1,13 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Register from "./pages/Register";
+// import Register from "./pages/Register";
 import { Shipments } from "./pages/Shipments";
-import { EditShipment } from "./pages/EditShipment";
+// import { EditShipment } from "./pages/EditShipment";
 import Nav from "./components/main/Nav";
 import { Toaster } from "react-hot-toast";
-import { ManageStaffs } from "./pages/ManageStaffs";
-import { CreateUser } from "./pages/CreateUser";
+// import { ManageStaffs } from "./pages/ManageStaffs";
+// import { CreateUser } from "./pages/CreateUser";
 import { Blog } from "./pages/Blog";
 import Test from "./pages/Test";
 import { TestShipment } from "./pages/TestShipment";
@@ -15,7 +15,7 @@ import { TestBookShipment } from "./pages/TestBookShipment";
 
 import Footer from "./components/main/Footer";
 import { Dashboard } from "./pages/Dashboard";
-import { Tracking } from "./pages/Tracking";
+// import { Tracking } from "./pages/Tracking";
 import { BookShipment } from "./pages/BookShipment";
 import { CreateBlog } from "./pages/CreateBlog";
 import { useQuery } from "@tanstack/react-query";

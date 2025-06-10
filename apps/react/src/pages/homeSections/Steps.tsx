@@ -38,7 +38,7 @@ export default function Steps() {
         parcel
       </h2>
       <div className="grid grid-cols-1 gap-4 mt-8 md:mt-12 mx-4 md:ml-40 md:mr-40">
-        {steps.map((step, index) => (
+        {steps.map((step, _index) => (
           <motion.div
             key={step.id}
             initial={{ opacity: 0, y: 50 }}

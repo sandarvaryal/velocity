@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { LuChartNoAxesColumnDecreasing } from "react-icons/lu";
-import { useNavigate } from "react-router-dom";
+// import { LuChartNoAxesColumnDecreasing } from "react-icons/lu";
+// import { useNavigate } from "react-router-dom";
 
 export function Blog() {
   const { data, isError, isLoading } = useQuery({
@@ -24,7 +24,7 @@ export function Blog() {
   if (isLoading) {
     return <>wait</>;
   }
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   console.log("blog", data);
 

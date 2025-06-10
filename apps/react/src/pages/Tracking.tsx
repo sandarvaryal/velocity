@@ -184,7 +184,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { FaCheckCircle } from "react-icons/fa";
-import { TbWorldSearch } from "react-icons/tb";
+// import { TbWorldSearch } from "react-icons/tb";
 import { IoTimerOutline } from "react-icons/io5";
 
 // interface Checkpoint {

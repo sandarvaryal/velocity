@@ -75,6 +75,7 @@ const DynamicSelect = ({ data, formFor }: { data: any; formFor: string }) => {
   };
 
   const [servicesOptions, setServicesOptions] = useState<string[]>([]);
+  console.log(servicesOptions);
 
   useEffect(() => {
     if (!data) return;

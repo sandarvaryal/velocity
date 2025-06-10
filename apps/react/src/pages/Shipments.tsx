@@ -68,7 +68,7 @@ function UnprotectedShipments() {
     retry: false,
   });
 
-  const { data, isSuccess, refetch, isLoading } = useQuery({
+  const { data, isSuccess, refetch } = useQuery({
     queryKey: ["shipments", filters],
     queryFn: async () => {
       const response = await axios.get(

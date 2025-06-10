@@ -112,9 +112,13 @@ import {
 
 export function InvoiceKeys({ data }: { data: any }) {
   const { control, setValue, register } = useFormContext();
+  // const [selectedDivision, setSelectedDivision] = useState<string | number>(
+  //   data?.division || ""
+  // );
   const [selectedDivision, setSelectedDivision] = useState<string | number>(
     data?.division || ""
   );
+  console.log(selectedDivision);
 
   const boxes = useWatch({ control, name: "boxes" }) || [];
 

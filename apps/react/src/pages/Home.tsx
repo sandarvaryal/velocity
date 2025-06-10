@@ -1,39 +1,39 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+// import { useState } from "react";
+// import { motion, AnimatePresence } from "framer-motion";
+// import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import Hero from "./homeSections/Hero";
 import Testimonial from "./homeSections/Testimonial";
 
-import AboutUs from "./homeSections/AboutUs";
+// import AboutUs from "./homeSections/AboutUs";
 import Vision from "./homeSections/Vision";
 import Location from "./homeSections/Location";
 import Footer from "./homeSections/Footer";
 import Steps from "./homeSections/Steps";
 import Services from "./homeSections/Services";
 
-import Details from "./homeSections/Details";
+// import Details from "./homeSections/Details";
 import Info from "./homeSections/Info";
-import Feature from "./homeSections/Feature";
+// import Feature from "./homeSections/Feature";
 
 export default function Home() {
-  const images = ["/nex2.jpeg", "/nex.jpeg", "/nex1.jpeg"];
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
-  const [isManualChange, setIsManualChange] = useState(false);
+  // const images = ["/nex2.jpeg", "/nex.jpeg", "/nex1.jpeg"];
+  // const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  // const [direction, setDirection] = useState(1);
+  // const [isManualChange, setIsManualChange] = useState(false);
 
-  const nextImage = () => {
-    setDirection(1);
-    setIsManualChange(true);
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
+  // const nextImage = () => {
+  //   setDirection(1);
+  //   setIsManualChange(true);
+  //   setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+  // };
 
-  const prevImage = () => {
-    setDirection(-1);
-    setIsManualChange(true);
-    setCurrentImageIndex(
-      (prevIndex) => (prevIndex - 1 + images.length) % images.length
-    );
-  };
+  // const prevImage = () => {
+  //   setDirection(-1);
+  //   setIsManualChange(true);
+  //   setCurrentImageIndex(
+  //     (prevIndex) => (prevIndex - 1 + images.length) % images.length
+  //   );
+  // };
 
   return (
     // <div className="bg-[#5D6894] min-h-[35rem] sm:min-h-[45rem] grid grid-cols-2 ">

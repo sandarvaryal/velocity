@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 
 // import priceAnimation from "./price-animation.json";
 
-const services = [
-  { title: "Affortable Pricing", img: "/services/airp.jpg" },
-  { title: "Fase Delivery", img: "/services/sea.jpg" },
-  { title: "Door-to-door Service", img: "/services/land.jpg" },
-  { title: "Tracking available", img: "/services/ecommerce.jpg" },
-  // { title: "Documents Courier", img: "/services/document.jpg" },
-  // { title: "Doorstep Delivery", img: "/services/door.jpeg" },
-];
+// const services = [
+//   { title: "Affortable Pricing", img: "/services/airp.jpg" },
+//   { title: "Fase Delivery", img: "/services/sea.jpg" },
+//   { title: "Door-to-door Service", img: "/services/land.jpg" },
+//   { title: "Tracking available", img: "/services/ecommerce.jpg" },
+//   // { title: "Documents Courier", img: "/services/document.jpg" },
+//   // { title: "Doorstep Delivery", img: "/services/door.jpeg" },
+// ];
 
 // const containerVariants = {
 //   hidden: { opacity: 0 },
@@ -20,14 +20,14 @@ const services = [
 //     transition: { staggerChildren: 0.3 },
 //   },
 // };
-const containerVariants = {
-  hidden: { opacity: 1, scale: 1 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: { staggerChildren: 0.3, ease: "easeOut", delay: 0.3 },
-  },
-};
+// const containerVariants = {
+//   hidden: { opacity: 1, scale: 1 },
+//   visible: {
+//     opacity: 1,
+//     scale: 1,
+//     transition: { staggerChildren: 0.3, ease: "easeOut", delay: 0.3 },
+//   },
+// };
 // variants={{
 //   hidden: { opacity: 0, scale: 0.9 },
 //   visible: {
@@ -37,10 +37,10 @@ const containerVariants = {
 //   },
 // }}
 
-const cardVariants = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { duration: 0.6, ease: "easeOut" } },
-};
+// const cardVariants = {
+//   hidden: { opacity: 0 },
+//   show: { opacity: 1, transition: { duration: 0.6, ease: "easeOut" } },
+// };
 
 const Services: React.FC = () => {
   const [priceAnimationData, setPriceAnimationData] = useState(null);

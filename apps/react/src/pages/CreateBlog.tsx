@@ -188,11 +188,11 @@
 
 //eta bata
 
-import { useMutation, useQuery } from "@tanstack/react-query";
+// import { useMutation } from "@tanstack/react-query";
 import SuperAdminProtectedWrap from "../hoc/SuperAdminProtectedWrap";
-import axios from "axios";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+// import axios from "axios";
+// import toast from "react-hot-toast";
+// import { useNavigate } from "react-router-dom";
 
 import { useState } from "react";
 
@@ -202,38 +202,38 @@ import SimpleEditor from "../util/Editor";
 
 function unprotectedCreateBlog() {
   const [content, setContent] = useState("");
-  const { mutate } = useMutation({
-    mutationFn: async (content: any) => {
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/postBlog`,
-        content,
-        {
-          withCredentials: true,
-        }
-      );
-      return response.data;
-    },
-    onSuccess: (data: any) => {
-      toast.success(data.message);
-      navigate("/");
-    },
-    onError: (error: any) => {
-      toast.error(error.response?.data?.message);
-      console.error("Failed to create blog", error.response?.data?.message);
-    },
-  });
+  // const { mutate } = useMutation({
+  //   mutationFn: async (content: any) => {
+  //     const response = await axios.post(
+  //       `${import.meta.env.VITE_BACKEND_URL}/api/postBlog`,
+  //       content,
+  //       {
+  //         withCredentials: true,
+  //       }
+  //     );
+  //     return response.data;
+  //   },
+  //   onSuccess: (data: any) => {
+  //     toast.success(data.message);
+  //     navigate("/");
+  //   },
+  //   onError: (error: any) => {
+  //     toast.error(error.response?.data?.message);
+  //     console.error("Failed to create blog", error.response?.data?.message);
+  //   },
+  // });
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const [title, setTitle] = useState("");
+  // const [title, setTitle] = useState("");
 
-  const submitFunction = () => {
-    const submitObj = {
-      title,
-      description: content,
-    };
-    mutate(submitObj);
-  };
+  // const submitFunction = () => {
+  //   const submitObj = {
+  //     title,
+  //     description: content,
+  //   };
+  //   mutate(submitObj);
+  // };
 
   // const handleImageUpload = async (e: any) => {
   //   const file = e.target.files[0];
@@ -254,28 +254,29 @@ function unprotectedCreateBlog() {
   //   editor.chain().focus().setImage({ src: url }).run();
   // };
 
-  const modules = {
-    toolbar: {
-      container: [
-        ["bold", "italic", "underline"],
-        [{ header: [1, 2, 3, false] }],
-        [{ list: "ordered" }, { list: "bullet" }],
-        ["image"],
-      ],
-    },
-    imageResize: {},
-  };
+  // const modules = {
+  //   toolbar: {
+  //     container: [
+  //       ["bold", "italic", "underline"],
+  //       [{ header: [1, 2, 3, false] }],
+  //       [{ list: "ordered" }, { list: "bullet" }],
+  //       ["image"],
+  //     ],
+  //   },
+  //   imageResize: {},
+  // };
 
-  const handleSubmit = () => {
-    console.log(content);
-  };
+  // const handleSubmit = () => {
+  //   console.log(content);
+  // };
   return (
     <div className="mb-[10rem]">
       <div className="p-6 m-[2rem]">
         <SimpleEditor value={content} setValue={setContent} />
       </div>
       <button
-        onClick={submitFunction}
+        // onClick={submitFunction}
+        onClick={() => {}}
         className="mt-4 px-4 py-2 bg-black text-white rounded cursor-pointer"
       >
         Submit

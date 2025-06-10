@@ -2,12 +2,12 @@ import * as React from "react";
 import {
   BookOpen,
   Bot,
-  Command,
+  // Command,
   Frame,
-  LifeBuoy,
+  // LifeBuoy,
   Map,
   PieChart,
-  Send,
+  // Send,
   Settings2,
   SquareTerminal,
 } from "lucide-react";

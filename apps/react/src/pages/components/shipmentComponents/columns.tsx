@@ -1,4 +1,4 @@
-import { ColumnDef } from "@tanstack/react-table";
+// import { ColumnDef } from "@tanstack/react-table";
 import toast from "react-hot-toast";
 import { FaCopy } from "react-icons/fa";
 import { Checkbox } from "@/components/ui/checkbox";

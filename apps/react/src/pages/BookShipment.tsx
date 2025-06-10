@@ -7,7 +7,7 @@ import axios from "axios";
 
 function UnprotectedBookShipment() {
   const location = useLocation();
-  const { data, isError, isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
       const response = await axios.get(

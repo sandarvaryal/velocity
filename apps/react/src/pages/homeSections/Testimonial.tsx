@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { FaPlane, FaTruckMoving } from "react-icons/fa";
+// import { motion } from "framer-motion";
+// import { FaPlane, FaTruckMoving } from "react-icons/fa";
 
 const people = [
   {
@@ -103,7 +103,7 @@ const people = [
 const repeatCount = 10;
 const repeatedInstance: any = [];
 for (let i = 0; i < repeatCount; i++) {
-  people.forEach((people, index) => {
+  people.forEach((people, _index) => {
     repeatedInstance.push({
       key: people.id,
       id: people.id,

@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { FaBox, FaMapMarkerAlt } from "react-icons/fa";
+// import { motion } from "framer-motion";
+// import { FaBox, FaMapMarkerAlt } from "react-icons/fa";
 import Lottie from "lottie-react";
 import { useEffect, useState } from "react";
 

@@ -76,61 +76,61 @@
 
 //eta
 
-import React, { useRef } from "react";
+import { useRef } from "react";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import axios from "axios";
+// import axios from "axios";
 
 // @ts-ignore
 import ImageResize from "quill-image-resize-module-react";
 Quill.register("modules/imageResize", ImageResize);
 
-interface SimpleEditorProps {
-  value: string;
-  setValue: (value: string) => void;
-}
+// interface SimpleEditorProps {
+//   value: string;
+//   setValue: (value: string) => void;
+// }
 
 const SimpleEditor = ({ value, setValue }: { value: any; setValue: any }) => {
   const quillRef = useRef<ReactQuill | null>(null);
 
-  const imageHandler = () => {
-    const input = document.createElement("input");
-    input.setAttribute("type", "file");
-    input.setAttribute("accept", "image/*");
-    input.click();
+  // const imageHandler = () => {
+  //   const input = document.createElement("input");
+  //   input.setAttribute("type", "file");
+  //   input.setAttribute("accept", "image/*");
+  //   input.click();
 
-    input.onchange = async () => {
-      const file = input.files?.[0];
-      if (!file) return;
+  //   input.onchange = async () => {
+  //     const file = input.files?.[0];
+  //     if (!file) return;
 
-      const formData = new FormData();
-      formData.append("myFile", file);
+  //     const formData = new FormData();
+  //     formData.append("myFile", file);
 
-      try {
-        const response = await axios.post(
-          `${import.meta.env.VITE_BACKEND_URL}/api/uploadImage`,
-          formData,
-          {
-            withCredentials: true,
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
+  //     try {
+  //       const response = await axios.post(
+  //         `${import.meta.env.VITE_BACKEND_URL}/api/uploadImage`,
+  //         formData,
+  //         {
+  //           withCredentials: true,
+  //           headers: {
+  //             "Content-Type": "multipart/form-data",
+  //           },
+  //         }
+  //       );
 
-        const url = response.data.url;
+  //       const url = response.data.url;
 
-        const editor = quillRef.current?.getEditor();
-        const range = editor?.getSelection();
+  //       const editor = quillRef.current?.getEditor();
+  //       const range = editor?.getSelection();
 
-        if (range) {
-          editor?.insertEmbed(range.index, "image", url);
-        }
-      } catch (err) {
-        console.error("Image upload failed", err);
-      }
-    };
-  };
+  //       if (range) {
+  //         editor?.insertEmbed(range.index, "image", url);
+  //       }
+  //     } catch (err) {
+  //       console.error("Image upload failed", err);
+  //     }
+  //   };
+  // };
 
   const modules = {
     toolbar: {
