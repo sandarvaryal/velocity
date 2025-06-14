@@ -13,13 +13,13 @@ import { User } from "./pages/Test";
 import { TestShipment } from "./pages/TestShipment";
 import { TestBookShipment } from "./pages/TestBookShipment";
 
-import Footer from "./components/main/Footer";
+// import Footer from "./components/main/Footer";
 import { Dashboard } from "./pages/Dashboard";
 import { Tracking } from "./pages/Tracking";
 // import { BookShipment } from "./pages/BookShipment";
 // import { CreateBlog } from "./pages/CreateBlog";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+// import { useQuery } from "@tanstack/react-query";
+// import axios from "axios";
 import { TestDashboard } from "./pages/TestDashboard";
 import { EditShipment } from "./pages/EditShipment";
 import { NotFound } from "./pages/404";
@@ -27,16 +27,16 @@ import { ManageStaffs } from "./pages/ManageStaffs";
 import { CreateUser } from "./pages/CreateUser";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  const { isError } = useQuery({
-    queryKey: ["verify"],
-    queryFn: async () => {
-      await axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/verify`, {
-        withCredentials: true,
-      });
-      return true;
-    },
-    retry: false,
-  });
+  // const { isError } = useQuery({
+  //   queryKey: ["verify"],
+  //   queryFn: async () => {
+  //     await axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/verify`, {
+  //       withCredentials: true,
+  //     });
+  //     return true;
+  //   },
+  //   retry: false,
+  // });
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -45,12 +45,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       </div>
 
       {children}
-
-      {!isError && (
-        <div className="border border-t-neutral-300 fixed bottom-0  bg-white left-0 w-full">
-          <Footer />
-        </div>
-      )}
     </div>
   );
 };
