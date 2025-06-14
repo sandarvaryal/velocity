@@ -11,6 +11,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import ClientSelect from "./formComponents/ClientSelect";
+
 const optionsMap: Record<string, string[]> = {
   "Nexus self": [
     "nepal post",
@@ -49,6 +53,7 @@ const DynamicSelect = ({ data, formFor }: { data: any; formFor: string }) => {
     formState: { errors },
   } = useFormContext();
   const selectedHub = watch("hub");
+  const selectedService = watch("service");
   const boxes = watch("boxes") || [];
   const boxAwbNumbers = boxes.map((box: any) => {
     return box?.boxAwbNumber || "";
@@ -115,38 +120,62 @@ const DynamicSelect = ({ data, formFor }: { data: any; formFor: string }) => {
   const hubError = errors?.hub?.message as string | undefined;
   const serviceError = errors?.service?.message as string | undefined;
 
+  // const handleDivisionChange = (value: any) => {
+  //   selectedHub(value);
+  //   setValue("Hub", value);
+  // };
+
+  const { isError: superAdminError, isLoading: superAdminLoading } = useQuery({
+    queryKey: ["verify"],
+    queryFn: async () => {
+      await axios.get(`${import.meta.env.VITE_BACKEND_URL}/superAdmin/verify`, {
+        withCredentials: true,
+      });
+      return true;
+    },
+    retry: false,
+  });
+
   return (
-    <div className=" flex flex-col gap-4">
-      {formFor === "EditShipment" ? (
-        <button
-          type="button"
-          className="border px-2 py-1 text-white bg-[#06a7ddcc] cursor-pointer"
-          onClick={handleClone}
-        >
-          Clone
-        </button>
-      ) : null}
+    <>
+      <div className=" flex flex-col gap-4">
+        {!superAdminError && !superAdminLoading ? (
+          <ClientSelect data1={data} />
+        ) : (
+          ""
+        )}
 
-      {/* AWB Number Input */}
-      <div className="flex flex-col gap-2">
-        <label htmlFor="awbNumber" className=" font-medium">
-          AWB Number
-        </label>
-        <Input
-          className="border px-2 py-1 focus:ring-2 focus:border-transparent outline-none w-full"
-          type="text"
-          id="awbNumber"
-          placeholder="AWB Number"
-          {...register("awbNumber")}
-        />
-      </div>
+        {formFor === "EditShipment" ? (
+          <button
+            type="button"
+            className="border px-2 py-1 text-white bg-[#06a7ddcc] cursor-pointer"
+            onClick={handleClone}
+          >
+            Clone
+          </button>
+        ) : null}
 
-      {/* Hub Selection */}
-      <div className="flex flex-col gap-2">
-        <label htmlFor="hub" className="  font-medium">
-          Hub
-        </label>
-        {/* <select
+        {/* AWB Number Input */}
+        <div className="flex flex-col gap-2">
+          <label htmlFor="awbNumber" className=" font-medium">
+            AWB Number
+          </label>
+          <Input
+            value={data.awbNumber}
+            className="border px-2 py-1 focus:ring-2 focus:border-transparent outline-none w-full"
+            type="text"
+            id="awbNumber"
+            placeholder="AWB Number"
+            {...register("awbNumber")}
+          />
+        </div>
+
+        {/* Hub Selection */}
+        <div className="flex flex-col gap-2">
+          <label htmlFor="hub" className="  font-medium">
+            Hub
+          </label>
+          {/* <select
           className="border border-gray-300 px-2  py-1 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-500 outline-none w-full"
           id="hub"
           {...register("hub")}
@@ -158,35 +187,36 @@ const DynamicSelect = ({ data, formFor }: { data: any; formFor: string }) => {
             </option>
           ))}
         </select> */}
-        <Select
-          onValueChange={(value) =>
-            register("hub").onChange({ target: { value, name: "hub" } })
-          }
-          {...register("hub")}
-        >
-          <SelectTrigger
-            id="hub"
-            className="border px-2 py-1 focus:ring-2 focus:border-transparent  w-full"
+          <Select
+            value={selectedHub}
+            onValueChange={(value) =>
+              register("hub").onChange({ target: { value, name: "hub" } })
+            }
+            // {...register("hub")}
           >
-            <SelectValue placeholder="Select a Hub" />
-          </SelectTrigger>
-          <SelectContent>
-            {Object.keys(optionsMap).map((option) => (
-              <SelectItem key={option} value={option}>
-                {option}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        {hubError && <p className="text-red-500 text-xs mt-1">{hubError}</p>}
-      </div>
+            <SelectTrigger
+              id="hub"
+              className="border px-2 py-1 focus:ring-2 focus:border-transparent  w-full"
+            >
+              <SelectValue placeholder="Select a Hub" />
+            </SelectTrigger>
+            <SelectContent>
+              {Object.keys(optionsMap).map((option) => (
+                <SelectItem key={option} value={option}>
+                  {option}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {hubError && <p className="text-red-500 text-xs mt-1">{hubError}</p>}
+        </div>
 
-      {/* Services Selection */}
-      <div className="flex flex-col gap-2">
-        <label htmlFor="service" className="font-medium">
-          Services
-        </label>
-        {/* <select
+        {/* Services Selection */}
+        <div className="flex flex-col gap-2">
+          <label htmlFor="service" className="font-medium">
+            Services
+          </label>
+          {/* <select
           className="border text-gray-500 border-gray-300 px-2 py-1 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none w-full"
           id="service"
           {...register("service")}
@@ -198,53 +228,56 @@ const DynamicSelect = ({ data, formFor }: { data: any; formFor: string }) => {
             </option>
           ))}
         </select> */}
-        <Select
-          onValueChange={(value) =>
-            register("service").onChange({ target: { value, name: "service" } })
-          }
-          {...register("hub")}
-        >
-          <SelectTrigger
-            id="hub"
-            className="border px-2 py-1 focus:ring-2 focus:border-transparent outline-none w-full"
+          <Select
+            value={selectedService}
+            onValueChange={(value) =>
+              register("service").onChange({
+                target: { value, name: "service" },
+              })
+            }
+            // {...register("hub")}
           >
-            <SelectValue placeholder="Select a Hub" />
-          </SelectTrigger>
-          <SelectContent>
-            {Object.keys(optionsMap).map((option) => (
-              <SelectItem key={option} value={option}>
-                {option}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        {serviceError && (
-          <p className="text-red-500 text-xs mt-1">{serviceError}</p>
-        )}
-      </div>
+            <SelectTrigger
+              id="service"
+              className="border px-2 py-1 focus:ring-2 focus:border-transparent outline-none w-full"
+            >
+              <SelectValue placeholder="Select a Service" />
+            </SelectTrigger>
+            <SelectContent>
+              {servicesOptions.map((option) => (
+                <SelectItem key={option} value={option}>
+                  {option}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {serviceError && (
+            <p className="text-red-500 text-xs mt-1">{serviceError}</p>
+          )}
+        </div>
 
-      <div className="flex flex-col gap-2 ">
-        <label htmlFor="trackingNumber">Forwarding Number</label>
-        <span className="flex items-center border rounded-md bg-sidebar min-h-11 px-2 py-1 outline-none w-full">
-          {formFor === "EditShipment" ? uniqueBoxAwbNumbers : ""}
-        </span>
+        <div className="flex flex-col gap-2 ">
+          <label htmlFor="trackingNumber">Forwarding Number</label>
+          <span className="flex items-center border rounded-md bg-sidebar min-h-11 px-2 py-1 outline-none w-full">
+            {formFor === "EditShipment" ? uniqueBoxAwbNumbers : ""}
+          </span>
 
-        {/* <input
+          {/* <input
         className="border bg-neutral-50 border-gray-300  px-2 py-2  outline-none w-full"
         id="trackingNumber"
         type="text"
         readOnly
       /> */}
-        <input
-          id="trackingNumber"
-          type="hidden"
-          {...register("trackingNumber")}
-          readOnly
-        />
-      </div>
+          <input
+            id="trackingNumber"
+            type="hidden"
+            {...register("trackingNumber")}
+            readOnly
+          />
+        </div>
 
-      {/* Verification Checkbox */}
-      {/* {formFor === "EditShipment" && (
+        {/* Verification Checkbox */}
+        {/* {formFor === "EditShipment" && (
         <div className="flex items-center gap-2 ">
           <input
             type="checkbox"
@@ -257,7 +290,8 @@ const DynamicSelect = ({ data, formFor }: { data: any; formFor: string }) => {
           </label>
         </div>
       )} */}
-    </div>
+      </div>
+    </>
   );
 };
 

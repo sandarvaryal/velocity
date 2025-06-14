@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {
   SidebarGroup,
+  SidebarGroupLabel,
   // SidebarGroupLabel,
   SidebarMenu,
   // SidebarMenuAction,
@@ -38,7 +39,7 @@ export function NavProjects({
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      {/* <SidebarGroupLabel>Projects</SidebarGroupLabel> */}
+      <SidebarGroupLabel>Admin</SidebarGroupLabel>
       <SidebarMenu>
         {projects.map((item) => (
           <SidebarMenuItem key={item.name}>
@@ -46,7 +47,7 @@ export function NavProjects({
               <NavLink
                 to={item.url}
                 className={({ isActive }) =>
-                  isActive ? "text-white" : "bg-red-600"
+                  isActive ? "mr-10" : "text-yellow-500"
                 }
               >
                 <item.icon />

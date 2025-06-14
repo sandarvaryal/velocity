@@ -60,76 +60,76 @@ export default function RenderUserInstance({
       <div className="px-2 py-3 text-sm text-center">{user.email}</div>
       <div className="px-2 py-3 text-sm text-center">{user.phone}</div>
 
-      {user.email === "dexeratech@gmail.com" ||
+      {/* {user.email === "dexeratech@gmail.com" ||
       user.email === "thenexuscourier@gmail.com" ? (
         <>
           <div className="px-2 py-3 text-sm text-center">{user.role}</div>
         </>
-      ) : (
-        <>
-          <select
-            className="px-2 py-3 border text-sm  font-semibold uppercase border-neutral-300 "
-            value={selectedValue}
-            onChange={changed}
+      ) : ( */}
+      <>
+        <select
+          className="px-2 py-3 border text-sm  font-semibold uppercase border-neutral-300 "
+          value={selectedValue}
+          onChange={changed}
+        >
+          <option value="admin" className="text-center">
+            admin
+          </option>
+          <option value="superAdmin" className="text-center ">
+            superAdmin
+          </option>
+        </select>
+
+        <div className="px-2 py-3 text-sm  items-center justify-center flex gap-3">
+          <button
+            type="button"
+            className={`px-4 font-semibold py-2 cursor-pointer ${edited ? "cursor-pointer bg-indigo-700" : "bg-neutral-500"} text-white`}
+            onClick={async () => {
+              if (!edited) {
+                return;
+              }
+              try {
+                const response = await axios.put(
+                  `${import.meta.env.VITE_BACKEND_URL}/superAdmin/changeAccountRole/${user.id}`,
+                  {
+                    role: selectedValue,
+                  },
+                  {
+                    withCredentials: true,
+                  }
+                );
+
+                //   toast.success("User Edited Successfully");
+                toast.success(response?.data?.message);
+                //   navigate("/superAdmin/manageStaffs", {
+                //     replace: true,
+                //   });
+                //   navigate("/superAdmin/manageStaffs");
+                queryClient.invalidateQueries({
+                  queryKey: [queryKey],
+                });
+              } catch (error: any) {
+                toast.error(error?.response?.data?.message);
+                console.error(error);
+              }
+            }}
           >
-            <option value="admin" className="text-center">
-              admin
-            </option>
-            <option value="superAdmin" className="text-center ">
-              superAdmin
-            </option>
-          </select>
+            Save
+          </button>
 
-          <div className="px-2 py-3 text-sm  items-center justify-center flex gap-3">
-            <button
-              type="button"
-              className={`px-4 font-semibold py-2 cursor-pointer ${edited ? "cursor-pointer bg-indigo-700" : "bg-neutral-500"} text-white`}
-              onClick={async () => {
-                if (!edited) {
-                  return;
-                }
-                try {
-                  const response = await axios.put(
-                    `${import.meta.env.VITE_BACKEND_URL}/superAdmin/changeAccountRole/${user.id}`,
-                    {
-                      role: selectedValue,
-                    },
-                    {
-                      withCredentials: true,
-                    }
-                  );
-
-                  //   toast.success("User Edited Successfully");
-                  toast.success(response?.data?.message);
-                  //   navigate("/superAdmin/manageStaffs", {
-                  //     replace: true,
-                  //   });
-                  //   navigate("/superAdmin/manageStaffs");
-                  queryClient.invalidateQueries({
-                    queryKey: [queryKey],
-                  });
-                } catch (error: any) {
-                  toast.error(error?.response?.data?.message);
-                  console.error(error);
-                }
-              }}
-            >
-              Save
-            </button>
-
-            <button
-              type="button"
-              className="px-4 font-semibold py-2 cursor-pointer  bg-red-500 text-white "
-              onClick={() => {
-                setDeleteUserId(user.id);
-                setIsModalOpen(true);
-              }}
-            >
-              Delete
-            </button>
-          </div>
-        </>
-      )}
+          <button
+            type="button"
+            className="px-4 font-semibold py-2 cursor-pointer  bg-red-500 text-white "
+            onClick={() => {
+              setDeleteUserId(user.id);
+              setIsModalOpen(true);
+            }}
+          >
+            Delete
+          </button>
+        </div>
+      </>
+      {/* )} */}
       <ConfirmationModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

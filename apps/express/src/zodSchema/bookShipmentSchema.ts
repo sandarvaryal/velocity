@@ -317,4 +317,5 @@ export const bookShipmentSchema = z.object({
   consignee: consigneeSchema,
   boxes: z.array(boxesSchema).min(1, "At least one box is required"),
   verificationStatus: verificationStatusSchema,
+  client: z.string().min(1, { message: "Client must be a string" }).optional(),
 });

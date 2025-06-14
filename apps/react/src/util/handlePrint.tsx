@@ -86,7 +86,7 @@ export const handlePrint = async (awbNumberAsNum: string) => {
       });
       return formattedDate;
     };
-    const qrLink = `https://thenexuscourier.com/tracking/${shipmentData.awbNumber}`;
+    const qrLink = `https://thevelocitycourier.com/tracking/${shipmentData.awbNumber}`;
     const qrSVGString = await QRCode.toString(qrLink, { type: "svg" });
 
     const invoiceContent = `
@@ -95,11 +95,11 @@ export const handlePrint = async (awbNumberAsNum: string) => {
     <!-- HEADER -->
     <div style="display: flex; justify-content: space-between; align-items: center;">
       <div style="display: flex; align-items: center;">
-      <img src="/velocity-logo.svg" alt="Nexus Logo" style="height: 125px; margin-right: 10px;">
+      <img src="/vello.png" alt="Velocity Logo" style="height: 125px; margin-right: 10px;">
 
         <div>
-          <h2 style="margin: 0; font-size: 30px;">Nexus Export Trade Pvt. Ltd.</h2>
-          <p style="margin: 5px 0; font-size: 14px;"><strong>Track your shipment in:</strong> https://thenexuscourier.com/tracking/${shipmentData.awbNumber}</p>
+          <h2 style="margin: 0; font-size: 30px;">Velocity Courier Pvt. Ltd.</h2>
+          <p style="margin: 5px 0; font-size: 14px;"><strong>Track your shipment in:</strong> https://thevelocitycourier.com/tracking/${shipmentData.awbNumber}</p>
         </div>
       </div>
       <div style="text-align: right;">
@@ -180,7 +180,7 @@ export const handlePrint = async (awbNumberAsNum: string) => {
       <tr>
         <td style="width: 50%; padding: 10px; border: 1px solid black; vertical-align: top;">
           <h4 style="margin-bottom: 5px;">Shipper Agreement</h4>
-          <p style="font-size: 12px;">Shipper agrees to Nexus Export Trade Pvt Ltd. Standard terms and conditions apply.</p>
+          <p style="font-size: 12px;">Shipper agrees to Velocity Courier Pvt Ltd. Standard terms and conditions apply.</p>
           <p><strong>Shipper’s Signature:</strong> </p>
           <p style="margin-top: 50px;">_______________ </p>
         </td>

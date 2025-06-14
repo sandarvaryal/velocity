@@ -2,25 +2,29 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 // import Register from "./pages/Register";
-import { Shipments } from "./pages/Shipments";
+// import { Shipments } from "./pages/Shipments";
 // import { EditShipment } from "./pages/EditShipment";
 import Nav from "./components/main/Nav";
 import { Toaster } from "react-hot-toast";
 // import { ManageStaffs } from "./pages/ManageStaffs";
 // import { CreateUser } from "./pages/CreateUser";
-import { Blog } from "./pages/Blog";
-import Test from "./pages/Test";
+// import { Blog } from "./pages/Blog";
+import { User } from "./pages/Test";
 import { TestShipment } from "./pages/TestShipment";
 import { TestBookShipment } from "./pages/TestBookShipment";
 
 import Footer from "./components/main/Footer";
 import { Dashboard } from "./pages/Dashboard";
-// import { Tracking } from "./pages/Tracking";
-import { BookShipment } from "./pages/BookShipment";
-import { CreateBlog } from "./pages/CreateBlog";
+import { Tracking } from "./pages/Tracking";
+// import { BookShipment } from "./pages/BookShipment";
+// import { CreateBlog } from "./pages/CreateBlog";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { TestDashboard } from "./pages/TestDashboard";
+import { EditShipment } from "./pages/EditShipment";
+import { NotFound } from "./pages/404";
+import { ManageStaffs } from "./pages/ManageStaffs";
+import { CreateUser } from "./pages/CreateUser";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const { isError } = useQuery({
@@ -53,21 +57,30 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
 const router = createBrowserRouter([
   {
-    path: "/test",
-    element: <Test />,
+    path: "/user",
+    element: <User />,
     children: [
+      // {
+      //   path: "shipment",
+      //   element: <Shipments />,
+      // },
+      // { path: "dashboard", element: <Dashboard /> },
+      // { path: "bookShipment", element: <BookShipment /> },
       {
         path: "shipment",
-        element: <Shipments />,
-      },
-      { path: "dashboard", element: <Dashboard /> },
-      { path: "bookShipment", element: <BookShipment /> },
-      {
-        path: "testShipment",
         element: <TestShipment />,
       },
-      { path: "testDashboard", element: <TestDashboard /> },
-      { path: "testBookShipment", element: <TestBookShipment /> },
+      { path: "dashboard", element: <TestDashboard /> },
+      { path: "bookShipment", element: <TestBookShipment /> },
+      { path: "editShipment/:awbNumber", element: <EditShipment /> },
+      {
+        path: "manageStaffs",
+        element: <ManageStaffs />,
+      },
+      {
+        path: "createUser",
+        element: <CreateUser />,
+      },
     ],
   },
 
@@ -84,10 +97,10 @@ const router = createBrowserRouter([
   //     path: "/register",
   //     element: <Layout children={<Register />} />,
   //   },
-  //   {
-  //     path: "/tracking/:awbNumber",
-  //     element: <Layout children={<Tracking />} />,
-  //   },
+  {
+    path: "/tracking/:awbNumber",
+    element: <Layout children={<Tracking />} />,
+  },
   //   {
   //     path: "/shipments",
   //     element: <Layout children={<Shipments />} />,
@@ -112,13 +125,17 @@ const router = createBrowserRouter([
   //     path: "/superAdmin/createUser",
   //     element: <Layout children={<CreateUser />} />,
   //   },
+  // {
+  //   path: "/blog",
+  //   element: <Layout children={<Blog />} />,
+  // },
+  // {
+  //   path: "/createBlog",
+  //   element: <Layout children={<CreateBlog />} />,
+  // },
   {
-    path: "/blog",
-    element: <Layout children={<Blog />} />,
-  },
-  {
-    path: "/createBlog",
-    element: <Layout children={<CreateBlog />} />,
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 

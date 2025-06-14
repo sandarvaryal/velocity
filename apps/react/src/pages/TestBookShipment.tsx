@@ -4,8 +4,9 @@ import { useLocation } from "react-router-dom";
 // import { MdAssignmentAdd } from "react-icons/md";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import ProtectedWrap from "@/hoc/ProtectedWrap";
 
-export function TestBookShipment() {
+export function UnprotectedTestBookShipment() {
   const location = useLocation();
   const { data, isLoading } = useQuery({
     queryKey: ["user"],
@@ -28,10 +29,13 @@ export function TestBookShipment() {
 
   return (
     <div className="container mx-auto py-10 px-10 flex flex-col gap-5">
-      <span className="text-[1.5rem] font-extrabold">Book Shipment</span>
+      <div className="flex justify-between">
+        <span className="text-[1.5rem] font-extrabold">Book Shipment</span>
+      </div>
       <div>
         <ShipmentForm formFor={"BookShipment"} data={data1} />
       </div>
     </div>
   );
 }
+export const TestBookShipment = ProtectedWrap(UnprotectedTestBookShipment);

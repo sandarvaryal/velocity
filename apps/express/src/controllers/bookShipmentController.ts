@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import { bookShipmentSchema } from "../zodSchema/bookShipmentSchema";
 import { destructureShipmentData } from "../utils/destructureShipmentData";
 import SendmailTransport from "nodemailer/lib/sendmail-transport";
-import { sendEmailOnBookment } from "../utils/sendEmailOnBookment";
+// import { sendEmailOnBookment } from "../utils/sendEmailOnBookment";
 
 const prisma = new PrismaClient();
 
@@ -145,9 +145,25 @@ export const createShipmentController = async (req: Request, res: Response) => {
     }
 
     const userId = req.user?.id;
+    const userRole = req.user?.role;
     const createdShipment = await prisma.shipment.create({
       data: { ...shipmentDataConfig(variables), userId },
     });
+
+    if (userRole === "superAdmin") {
+      if (variables.client.length > 1) {
+        try {
+          await prisma.shipment.create({
+            data: {
+              ...shipmentDataConfig(variables),
+              userId: variables.client,
+            },
+          });
+        } catch {
+          return res.status(500).json({ message: "Internal error" });
+        }
+      }
+    }
 
     if (!createdShipment) {
       return res
@@ -164,12 +180,12 @@ export const createShipmentController = async (req: Request, res: Response) => {
       consigneeAddress2: variables.consigneeAdress2,
       consigneeZip: variables.consigneeZip,
     };
-    sendEmailOnBookment(
-      variables.consigneeEmail,
-      variables.awbNumber,
-      totalAddress,
-      variables.totalBoxes
-    );
+    // sendEmailOnBookment(
+    //   variables.consigneeEmail,
+    //   variables.awbNumber,
+    //   totalAddress,
+    //   variables.totalBoxes
+    // );
 
     return res.status(200).json({ message: "Shipment booked successfully!" });
   } catch (e: any) {

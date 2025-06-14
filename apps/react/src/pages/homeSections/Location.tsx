@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 import { CiLocationOn } from "react-icons/ci";
 import { LuMail } from "react-icons/lu";
 import { LuPhone, LuClock4 } from "react-icons/lu";
@@ -62,7 +62,7 @@ function Location() {
         </div>
       </div>
 
-      <motion.div
+      {/* <motion.div
         className="w-full min-h-[20rem] overflow-hidden flex-1"
         initial="hidden"
         whileInView="visible"
@@ -75,16 +75,19 @@ function Location() {
             transition: { duration: 0.8, ease: "easeInOut", delay: 0.2 },
           },
         }}
-      >
+      > */}
+      <div className="w-full min-h-[20rem] overflow-hidden flex-1">
         <iframe
           title="Google Map"
           className="w-full h-full min-h-[20rem]"
           loading="lazy"
           allowFullScreen
           referrerPolicy="no-referrer-when-downgrade"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3531.996491587166!2d85.29759659678956!3d27.717394600000024!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1969458ea627%3A0xe500463026b65ddf!2sNexus%20Export%20Trade!5e0!3m2!1sen!2snp!4v1740558846486!5m2!1sen!2snp"
+          // src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d446.04283905935876!2d85.3443473!3d27.73100195263243!2m3!1f0!2f45!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19001ef514dd%3A0xbe53be0c3d57c2cf!2sVelocity%20Courier!5e1!3m2!1sen!2snp!4v1749641754973!5m2!1sen!2snp"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d446.04283905935876!2d85.3443473!3d27.73100195263243!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19001ef514dd%3A0xbe53be0c3d57c2cf!2sVelocity%20Courier!5e0!3m2!1sen!2snp!4v1749641754973!5m2!1sen!2snp"
         ></iframe>
-      </motion.div>
+      </div>
+      {/* </motion.div> */}
     </div>
   );
 }

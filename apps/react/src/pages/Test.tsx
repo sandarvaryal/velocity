@@ -2,9 +2,12 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { SiteHeader } from "@/components/site-header";
 // import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import ProtectedWrap from "@/hoc/ProtectedWrap";
 import { Outlet } from "react-router-dom";
 
-export default function Page() {
+function UnprotectedUser() {
+  const realUser = JSON.parse(localStorage.getItem("user") || "{}");
+  console.log(realUser, "realUser");
   return (
     <div className="[--header-height:calc(--spacing(14))]">
       <SidebarProvider className="flex flex-col">
@@ -28,3 +31,4 @@ export default function Page() {
     </div>
   );
 }
+export const User = ProtectedWrap(UnprotectedUser);

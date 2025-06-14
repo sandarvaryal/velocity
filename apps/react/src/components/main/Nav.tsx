@@ -44,7 +44,7 @@ export default function Nav() {
       );
 
       if (response.status === 200) {
-        navigate(`/shipments/edit/${searchInput}`);
+        navigate(`/user/editShipment/${searchInput}`);
         return;
       }
     } catch (e) {
@@ -214,33 +214,33 @@ export default function Nav() {
             </div>
             <button
               className={`flex text-white font-semibold items-center gap-2 text-sm cursor-pointer ${
-                isActive("/dashboard")
+                isActive("/user/dashboard")
                   ? "text-[#0d78bc]"
                   : "hover:text-gray-400"
               }`}
-              onClick={() => navigate("/dashboard")}
+              onClick={() => navigate("/user/dashboard")}
             >
               <MdDashboard />
               Dashboard
             </button>
             <button
               className={`flex text-white font-semibold items-center gap-2 text-sm cursor-pointer ${
-                isActive("/shipments")
+                isActive("/user/shipment")
                   ? "text-[#0d78bc]"
                   : "hover:text-gray-400"
               }`}
-              onClick={() => navigate("/shipments")}
+              onClick={() => navigate("/user/shipment")}
             >
               <FaPlaneDeparture />
               Shipments
             </button>
             <button
               className={`flex text-white font-semibold items-center gap-2 text-sm cursor-pointer ${
-                isActive("/bookShipments")
+                isActive("/user/bookShipments")
                   ? "text-[#0d78bc]"
                   : "hover:text-gray-400"
               }`}
-              onClick={() => navigate("/bookShipments")}
+              onClick={() => navigate("/user/bookShipments")}
             >
               <MdAssignmentAdd />
               Book Shipment
@@ -277,7 +277,7 @@ export default function Nav() {
               </div>
             )}
             <button
-              className="bg-[#F97316] hover:bg-[#EA6309] px-4 py-2 rounded text-white font-bold"
+              className="bg-[#F97316] hover:bg-[#EA6309] px-4 py-2 rounded text-white font-bold cursor-pointer"
               onClick={() => navigate("/login")}
             >
               LOGIN
@@ -307,10 +307,10 @@ export default function Nav() {
             </div>
             <button
               className={`flex text-white font-semibold items-center gap-2 text-sm cursor-pointer ${
-                isActive("/dashboard") ? "text-[#0d78bc]" : ""
+                isActive("/user/dashboard") ? "text-[#0d78bc]" : ""
               }`}
               onClick={() => {
-                navigate("/dashboard");
+                navigate("/user/dashboard");
                 setIsOpen(false);
               }}
             >
@@ -373,7 +373,7 @@ export default function Nav() {
               </>
             )}
             <button
-              className="bg-[#F97316] hover:bg-[#EA6309] px-4 py-2 rounded text-white font-bold"
+              className="bg-[#F97316] hover:bg-[#EA6309] px-4 py-2 rounded text-white font-bol"
               onClick={() => {
                 navigate("/login");
                 setIsOpen(false);

@@ -2,9 +2,9 @@ import * as React from "react";
 import {
   BookOpen,
   Bot,
-  // Command,
+  Command,
   Frame,
-  // LifeBuoy,
+  LifeBuoy,
   Map,
   PieChart,
   // Send,
@@ -120,44 +120,44 @@ const data = {
     },
   ],
   navSecondary: [
-    // {
-    //   title: "Support",
-    //   url: "#",
-    //   icon: LifeBuoy,
-    // },
-    // {
-    //   title: "Feedback",
-    //   url: "#",
-    //   icon: Send,
-    // },
+    {
+      title: "Manage User",
+      url: "/user/manageStaffs",
+      icon: LifeBuoy,
+    },
+    {
+      title: "Create New User",
+      url: "/user/createUser",
+      icon: Command,
+    },
   ],
   projects: [
     {
       name: "Book Shipment",
-      url: "/test/BookShipment",
+      url: "/user/bookShipment",
       icon: Frame,
     },
     {
       name: "Dashboard",
-      url: "/test/Dashboard",
+      url: "/user/dashboard",
       icon: PieChart,
     },
+    // {
+    //   name: "Shipments",
+    //   url: "/test/Shipment",
+    //   icon: Map,
+    // },
     {
       name: "Shipments",
-      url: "/test/Shipment",
+      url: "/user/shipment",
       icon: Map,
     },
-    {
-      name: "testShipment",
-      url: "/test/testShipment",
-      icon: Map,
-    },
-    {
-      name: "testDashboard",
-      url: "/test/testDashboard",
-      icon: PieChart,
-    },
-    { name: "testBookShipment", url: "/test/testBookShipment", icon: Frame },
+    // {
+    //   name: "Dashboard",
+    //   url: "/user/dashboard",
+    //   icon: PieChart,
+    // },
+    // { name: "testBookShipment", url: "/test/testBookShipment", icon: Frame },
   ],
 };
 
@@ -190,7 +190,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        {/* <NavUser user={data.user} /> */}
+        <NavUser />
       </SidebarFooter>
     </Sidebar>
   );

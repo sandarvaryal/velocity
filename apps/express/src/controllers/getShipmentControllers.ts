@@ -4,6 +4,7 @@ const prisma = new PrismaClient();
 import { z } from "zod";
 
 const filterParamSchema = z.object({
+  rows: z.coerce.number(),
   page: z.coerce.number(),
   awbNumber: z.string({ message: "Invalid awbNumber value" }).optional(),
   consignorName: z
@@ -36,6 +37,7 @@ export const getShipmentsController = async (req: Request, res: Response) => {
   }
 
   const {
+    rows,
     page,
     awbNumber,
     consignorName,
@@ -105,7 +107,7 @@ export const getShipmentsController = async (req: Request, res: Response) => {
     }
   }
 
-  const limit = 20;
+  const limit = rows;
   const startIndex = (page - 1) * limit;
 
   if (Object.keys(filterCriteria).length === 0) {
@@ -137,7 +139,8 @@ export const getShipmentsController = async (req: Request, res: Response) => {
           },
           include: includeConfig,
         });
-        recordNumber = shipment.length;
+        // recordNumber = shipment.length;
+        recordNumber = await prisma.shipment.count();
       } else {
         shipment = await prisma.shipment.findMany({
           where: {
@@ -151,16 +154,15 @@ export const getShipmentsController = async (req: Request, res: Response) => {
           include: includeConfig,
         });
 
-        console.log("shipment", shipment);
-        recordNumber = shipment?.length;
+        recordNumber = await prisma.shipment.count();
       }
-
+      console.log("recordNumbaer", recordNumber);
       const totalPage = Math.ceil(recordNumber / limit);
       // if (!shipment) {
       //   return res.status(404).json({ message: "Shipment not found" });
       // }
 
-      return res.json({ shipment, totalPage });
+      return res.json({ shipment, totalPage, yo: "yo" });
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: "Internal Server Error" });
@@ -205,7 +207,7 @@ export const getShipmentController = async (req: Request, res: Response) => {
   const role = req.user?.role;
   const userId = req.user?.id;
 
-  let shipment;
+  let shipment: any;
 
   if (awbNumber) {
     try {
@@ -225,13 +227,44 @@ export const getShipmentController = async (req: Request, res: Response) => {
             verificationStatus: true,
           },
         });
+
+        if (!shipment) {
+          return res.status(404).json({ message: "Shipment not found" });
+        }
+        console.log(shipment, "shipment");
+
+        return res.json(shipment);
       } else {
-        const adminShipment: any = await prisma.user.findMany({
+        // const adminShipment: any = await prisma.user.findFirst({
+        //   where: {
+        //     id: userId,
+        //   },
+        //   select: {
+        //     // where: { userId },
+        //     shipments: {
+        //       include: {
+        //         consignor: true,
+        //         consignee: true,
+        //         Boxes: {
+        //           include: {
+        //             BoxesContent: true,
+        //           },
+        //         },
+        //         verificationStatus: true,
+        //       },
+        //     },
+        //   },
+        // });
+        // shipment = adminShipment.shipment;
+        const adminShipment = await prisma.user.findFirst({
           where: {
             id: userId,
           },
           select: {
             shipments: {
+              where: {
+                awbNumber: awbNumber,
+              },
               include: {
                 consignor: true,
                 consignee: true,
@@ -245,13 +278,21 @@ export const getShipmentController = async (req: Request, res: Response) => {
             },
           },
         });
-        shipment = adminShipment.shipment;
+
+        shipment = adminShipment?.shipments;
+
+        if (!shipment) {
+          return res.status(404).json({ message: "Shipment not found" });
+        }
+        const returnShipment = shipment[0];
+        return res.json(returnShipment);
       }
 
-      if (!shipment) {
-        return res.status(404).json({ message: "Shipment not found" });
-      }
-      res.json(shipment);
+      // if (!shipment) {
+      //   return res.status(404).json({ message: "Shipment not found" });
+      // }
+      // const returnShipment = shipment[0];
+      // return res.json(returnShipment);
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Internal Server Error" });

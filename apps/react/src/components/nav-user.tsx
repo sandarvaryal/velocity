@@ -23,17 +23,45 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
-}) {
+// export function NavUser({
+//   user,
+// }: {
+//   user: {
+//     name: string;
+//     email: string;
+//     avatar: string;
+//   };
+// }) {
+export function NavUser() {
   const { isMobile } = useSidebar();
+  const navigate = useNavigate();
+
+  const { mutate: logout } = useMutation({
+    mutationFn: async () => {
+      await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/auth/logout`,
+        null,
+        {
+          withCredentials: true,
+        }
+      );
+    },
+    onSuccess: () => {
+      localStorage.removeItem("user");
+      toast.success("Logged Out Successfully");
+      navigate("/");
+    },
+    onError: (error: any) => {
+      toast.error(error.response?.data?.message || "Logout failed");
+      console.error("Logout failed:", error.response?.data?.message);
+    },
+  });
+  const realUser = JSON.parse(localStorage.getItem("user") || "{}");
 
   return (
     <SidebarMenu>
@@ -45,12 +73,17 @@ export function NavUser({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.name} />
+                {/* <AvatarImage src={user.avatar} alt={user.name} /> */}
+                <AvatarImage src={realUser.url} alt={realUser.username} />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                {/* <span className="truncate font-medium">{user.name}</span>
+                <span className="truncate text-xs">{user.email}</span> */}
+                <span className="truncate font-medium">
+                  {realUser.username}
+                </span>
+                <span className="truncate text-xs">{realUser.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -64,12 +97,17 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
+                  {/* <AvatarImage src={user.avatar} alt={user.name} /> */}
+                  <AvatarImage src={realUser.url} alt={realUser.username} />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  {/* <span className="truncate font-medium">{user.name}</span>
+                  <span className="truncate text-xs">{user.email}</span> */}
+                  <span className="truncate font-medium">
+                    {realUser.username}
+                  </span>
+                  <span className="truncate text-xs">{realUser.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>
@@ -97,8 +135,12 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <LogOut />
-              Log out
+              <button className="flex gap-2" onClick={() => logout()}>
+                <LogOut />
+                Log out
+              </button>
+              {/* <LogOut />
+              Log out */}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

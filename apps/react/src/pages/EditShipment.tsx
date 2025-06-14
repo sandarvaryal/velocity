@@ -3,10 +3,11 @@ import ShipmentForm from "./components/ShipmentForm";
 import { getShipment } from "../api/shipment/getShipments";
 import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import ProtectedWrap from "../hoc/ProtectedWrap";
-import { FaEdit } from "react-icons/fa";
+// import ProtectedWrap from "../hoc/ProtectedWrap";
+// import { FaEdit } from "react-icons/fa";
 
-function UnprotectedEditShipment() {
+// function UnprotectedEditShipment() {
+export function EditShipment() {
   const { awbNumber } = useParams();
 
   const { data, isError } = useQuery({
@@ -18,20 +19,23 @@ function UnprotectedEditShipment() {
   if (isError) {
     toast.error(data.response?.data?.message);
   }
-  console.log(data);
+  console.log("data", data);
 
   return (
     <>
-      <div className="max-w-[100rem] m-auto mb-24 px-6 relative pt-2">
-        <h1 className=" font-semibold text-gray-700 flex items-center gap-2 pt-2 ">
+      <div className="container mx-auto py-10 px-10 flex flex-col gap-5">
+        {/* <h1 className=" font-semibold text-gray-700 flex items-center gap-2 pt-2 ">
           <span className="text-lg flex items-center gap-1 sm:text-xl">
             <FaEdit /> Edit Shipment
-          </span>
-        </h1>
+          </span> 
+        </h1> */}
+
+        <span className="text-[1.5rem] font-extrabold">Shipments</span>
+
         <ShipmentForm data={data} formFor={"EditShipment"} />
       </div>
     </>
   );
 }
 
-export const EditShipment = ProtectedWrap(UnprotectedEditShipment);
+// export const EditShipment = ProtectedWrap(UnprotectedEditShipment);

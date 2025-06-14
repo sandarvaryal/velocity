@@ -38,6 +38,7 @@ export const editVerificationController = async (
   }
   const id = data.data.id;
   const verificationStatus = body.data.verification;
+  console.log(verificationStatus, "verificationStatus");
 
   try {
     const editedShipment = await prisma.shipment.update({
@@ -76,10 +77,10 @@ export const editVerificationController = async (
             },
           },
         });
-        addTrackingInstance(
-          editedShipment.trackingNumber,
-          editedShipment.service
-        );
+        // addTrackingInstance(
+        //   editedShipment.trackingNumber,
+        //   editedShipment.service
+        // );
       } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Internal server Error" });

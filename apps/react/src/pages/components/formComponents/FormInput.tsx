@@ -107,6 +107,8 @@ export default function FormInput({
       <Input
         {...register(fieldName)}
         id={name}
+        // value={value}
+        defaultValue={value}
         type={fieldType}
         className={`w-full transition-all ${errorMessage ? "border-destructive" : ""}`}
       />

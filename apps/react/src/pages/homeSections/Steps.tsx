@@ -6,7 +6,7 @@ const steps = [
     id: "01",
     title: "Parcel Registration",
     description:
-      "Register your parcel with Nexus Courier for fast and secure shipping.",
+      "Register your parcel with Velocity Courier for fast and secure shipping.",
     icon: <FaClipboardList className="text-[#F97316] text-5xl" />,
   },
   {

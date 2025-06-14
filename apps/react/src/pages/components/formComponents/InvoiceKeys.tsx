@@ -115,9 +115,17 @@ export function InvoiceKeys({ data }: { data: any }) {
   // const [selectedDivision, setSelectedDivision] = useState<string | number>(
   //   data?.division || ""
   // );
-  const [selectedDivision, setSelectedDivision] = useState<string | number>(
-    data?.division || ""
-  );
+  const [selectedDivision, setSelectedDivision] = useState(data.division);
+
+  // if (data) {
+  //   setValue("division", data.division);
+  // }
+  useEffect(() => {
+    if (data?.division) {
+      setSelectedDivision(data.division);
+      setValue("division", data.division);
+    }
+  }, [data?.division, setValue]);
   console.log(selectedDivision);
 
   const boxes = useWatch({ control, name: "boxes" }) || [];
@@ -207,6 +215,7 @@ export function InvoiceKeys({ data }: { data: any }) {
             Division:
           </label>
           <Select
+            value={selectedDivision}
             onValueChange={(options: any) => {
               handleDivisionChange(options);
             }}

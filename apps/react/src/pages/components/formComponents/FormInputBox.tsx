@@ -250,6 +250,7 @@ export default function FormInputBox({
       //   step={fieldType === "number" ? "any" : undefined}
       // />
       <Input
+        value={value}
         {...register(fieldName)}
         className={`w-full px-2 text-center py-2 h-full ${errorMessage ? "border-destructive" : ""}`}
         type={fieldType}

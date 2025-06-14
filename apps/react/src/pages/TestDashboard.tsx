@@ -8,8 +8,9 @@ import {
 } from "@/components/ui/select";
 import { BadgeCheck, Box, House, PlaneTakeoff } from "lucide-react";
 import { ChartBarInteractive } from "./components/dashboardComponents/BarChart";
+import ProtectedWrap from "@/hoc/ProtectedWrap";
 
-export function TestDashboard() {
+export function UnprotectedTestDashboard() {
   return (
     <div className="container mx-auto py-10 px-10 flex flex-col gap-[2rem]">
       <span className="text-[1.5rem] font-extrabold">Dashboard</span>
@@ -63,3 +64,5 @@ export function TestDashboard() {
     </div>
   );
 }
+
+export const TestDashboard = ProtectedWrap(UnprotectedTestDashboard);

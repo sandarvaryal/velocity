@@ -202,6 +202,14 @@ const registerUserSchema = z.object({
     message: "Phone number must be a valid number",
   }),
   role: z.enum(["admin", "superAdmin"]),
+
+  company: z.string().min(1, { message: "Company is required" }),
+  country: z.string().min(1, { message: "Country is required" }),
+  zip: z.string().min(1, { message: "Zip is required" }),
+  state: z.string().min(1, { message: "State is required" }),
+  city: z.string().min(1, { message: "City is required" }),
+  address1: z.string().min(1, { message: "Address is required" }),
+  url: z.string().min(1, { message: "Url is required" }),
 });
 
 function UnprotectedCreateUser() {
@@ -222,7 +230,7 @@ function UnprotectedCreateUser() {
     },
     onSuccess: (data: any) => {
       toast.success(data.message);
-      navigate("/superAdmin/ManageStaffs");
+      navigate("/user/ManageStaffs");
     },
     onError: (error: any) => {
       toast.error(error.response?.data?.message || "Registration failed");
@@ -249,6 +257,14 @@ function UnprotectedCreateUser() {
             <RegisterFormInput name="password" label="Password" />
             <RegisterFormInput name="phone" label="Phone Number" />
             <RegisterSelect name="role" label="Role" />
+
+            <RegisterFormInput name="company" label="Company" />
+            <RegisterFormInput name="country" label="country" />
+            <RegisterFormInput name="zip" label="zip" />
+            <RegisterFormInput name="state" label="State" />
+            <RegisterFormInput name="city" label="city" />
+            <RegisterFormInput name="address1" label="address1" />
+            <RegisterFormInput name="url" label="url" />
 
             <button
               type="submit"

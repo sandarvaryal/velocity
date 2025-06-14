@@ -19,6 +19,8 @@ export const destructureShipmentData = (shipment: any, isBooking: boolean) => {
     consignee,
     boxes,
     verificationStatus,
+
+    client,
   } = shipment.data;
   const date = isBooking ? new Date() : shipment.data.date;
   //experiment ShipmentId
@@ -113,6 +115,9 @@ export const destructureShipmentData = (shipment: any, isBooking: boolean) => {
     date,
     awbNumber,
     hub,
+
+    client,
+
     service,
     trackingNumber,
     division,

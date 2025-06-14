@@ -28,11 +28,13 @@ model User {
   refreshTokenVersion Int     @default(1)
   role                Role    @default(admin)
   phone               String
-  company             String?
+  company             String? @unique
   country             String?
   zip                 String?
   state               String?
   city                String?
+  address1            String?
+  url                 String?
 
   shipments Shipment[]
 }

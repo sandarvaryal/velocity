@@ -3,12 +3,15 @@ import { DataTable } from "./components/shipmentComponents/DataTable";
 import { columns } from "./components/shipmentComponents/columns";
 // import { useNavigate } from "react-router-dom";
 // import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, QueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import ProtectedWrap from "@/hoc/ProtectedWrap";
 // import toast from "react-hot-toast";
 
-export function TestShipment() {
+export const queryClient = new QueryClient();
+export function UnprotectedTestShipment() {
   const [page, _setPage] = useState(1);
+  const [rows, setRows] = useState(10);
   // const navigate = useNavigate();
   // const queryClient = useQueryClient();
 
@@ -20,6 +23,7 @@ export function TestShipment() {
   // const [shipmentToDelete, setShipmentToDelete] = useState<any>(null);
 
   const [filters, setFilters] = useState({
+    rows,
     page,
     awbNumber: "",
     consignorName: "",
@@ -37,7 +41,12 @@ export function TestShipment() {
       page,
     }));
   }, [page]);
-
+  useEffect(() => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      rows,
+    }));
+  }, [rows]);
   //   const { data: isSuperAdmin, isError: superAdminError } = useQuery({
   //     queryKey: ["superVerify"],
   //     queryFn: async () => {
@@ -49,7 +58,7 @@ export function TestShipment() {
   //     retry: false,
   //   });
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ["shipments", filters],
     queryFn: async () => {
       const response = await axios.get(
@@ -62,10 +71,17 @@ export function TestShipment() {
       return response.data;
     },
   });
+  const handleApplyFilters = (newFilters: typeof filters) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      ...newFilters,
+      page,
+    }));
+    refetch();
+  };
   if (isLoading) {
     return <></>;
   }
-  console.log("data.shipment", data.shipment);
 
   // const handleApplyFilters = (newFilters: typeof filters) => {
   //   setFilters((prevFilters) => ({
@@ -137,12 +153,18 @@ export function TestShipment() {
   //   });
   //   return formattedDate;
   // };
+  console.log("totalPage", data.totalPage);
 
   return (
     <div className="container mx-auto py-10 px-10 flex flex-col gap-5">
       <span className="text-[1.5rem] font-extrabold">Shipments</span>
       <DataTable
+        setRows={setRows}
+        totalPage={data.totalPage}
+        onApply={handleApplyFilters}
         columns={columns}
+        page={page}
+        setPage={_setPage}
         // data={[
         //   {
         //     Date: "string",
@@ -166,3 +188,4 @@ export function TestShipment() {
     </div>
   );
 }
+export const TestShipment = ProtectedWrap(UnprotectedTestShipment);

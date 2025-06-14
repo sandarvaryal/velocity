@@ -14,6 +14,9 @@ import getBlog from "./getBlog";
 import postBlog from "./postBlog";
 import uploadImage from "./uploadImage";
 import getPreData from "./getPreData";
+import putEditBulk from "./editBulk";
+import deleteBulk from "./deleteBulk";
+import getClient from "./getClient";
 
 const api = [
   getShipment,
@@ -32,6 +35,9 @@ const api = [
   postBlog,
   uploadImage,
   getPreData,
+  putEditBulk,
+  deleteBulk,
+  getClient,
 ];
 
 export default api;

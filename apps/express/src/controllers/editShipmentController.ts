@@ -9,9 +9,10 @@ const prisma = new PrismaClient();
 export const editShipmentController = async (req: Request, res: Response) => {
   const awbNumber = req.params.awbNumber;
   const role = req.user?.role;
-  if (role !== "superAdmin") {
-    return res.status(403).json({ message: "Unauthorized" });
-  }
+  const userId = req.user?.id;
+  // if (role !== "superAdmin") {
+  //   return res.status(403).json({ message: "Unauthorized" });
+  // }
 
   if (!awbNumber) {
     return res.status(400).json({ message: "Invalid or missing AWB number" });
@@ -83,84 +84,171 @@ export const editShipmentController = async (req: Request, res: Response) => {
     });
     console.log(variables);
 
-    await prisma.shipment.create({
-      data: {
-        id: shipmentId,
-        awbNumber: variables.awbNumber,
-        autoAwb: variables.autoAwb,
-        trackingNumber: variables.trackingNumber,
-        trackingId,
+    const userRole = req.user?.role;
 
-        date: variables.date,
-        hub: variables.hub,
-        service: variables.service,
-        division: variables.division,
-        totalBoxes: variables.totalBoxes,
-        totalActualWeightKg: variables.totalActualWeightKg,
-        totalVolumetricWeightKg: variables.totalChargeableWeightKg,
-        totalChargeableWeightKg: variables.totalChargeableWeightKg,
-        invoiceTotal: variables.invoiceTotal,
-        contentDescriptions: variables.contentDescriptions,
-        consignor: {
-          create: {
-            company: variables.consignorCompany,
-            name: variables.consignorName,
-            country: variables.consignorCountry,
-            address1: variables.consignorAddress1,
-            address2: variables.consignorAddress2,
-            zip: variables.consignorZip,
-            city: variables.consignorCity,
-            state: variables.consignorState,
-            phoneNumber: variables.consignorPhoneNumber,
-            email: variables.consignorEmail,
-          },
-        },
-        consignee: {
-          create: {
-            company: variables.consigneeCompany,
-            name: variables.consigneeName,
-            country: variables.consigneeCountry,
-            address1: variables.consigneeAddress1,
-            address2: variables.consigneeAddress2,
-            zip: variables.consigneeZip,
-            city: variables.consigneeCity,
-            state: variables.consigneeState,
-            phoneNumber: variables.consigneePhoneNumber,
-            email: variables.consigneeEmail,
-          },
-        },
-        verificationStatus: {
-          create: {
-            shipmentVerified: variables.shipmentVerified,
-            shipmentVerifiedTime: variables.shipmentVerifiedTime,
-            shipmentProcessed: variables.shipmentProcessed,
-            shipmentDepartureTime: variables.shipmentDepartureTime,
-          },
-        },
-        Boxes: {
-          create: variables.destructuredBoxes.map((box: any) => ({
-            boxAwbNumber: box.boxAwbNumber,
-            lengthCm: box.lengthCm,
-            widthCm: box.widthCm,
-            heightCm: box.heightCm,
-            actualWeightKg: box.actualWeightKg,
-            volumetricWeightKg: box.volumetricWeightKg,
-            chargeableWeightKg: box.chargeableWeightKg,
-            BoxesContent: {
-              create: box.destructuredBoxContent.map((content: any) => ({
-                id: content.id,
-                description: content.description,
-                HsCode: content.HsCode,
-                quantity: content.quantity,
-                unitRate: content.unitRate,
-                unitWeight: content.unitWeight,
-                total: content.total,
-              })),
+    if (userRole === "superAdmin") {
+      await prisma.shipment.create({
+        data: {
+          id: shipmentId,
+          awbNumber: variables.awbNumber,
+          autoAwb: variables.autoAwb,
+          trackingNumber: variables.trackingNumber,
+          trackingId,
+
+          userId: variables.client,
+
+          date: variables.date,
+          hub: variables.hub,
+          service: variables.service,
+          division: variables.division,
+          totalBoxes: variables.totalBoxes,
+          totalActualWeightKg: variables.totalActualWeightKg,
+          totalVolumetricWeightKg: variables.totalChargeableWeightKg,
+          totalChargeableWeightKg: variables.totalChargeableWeightKg,
+          invoiceTotal: variables.invoiceTotal,
+          contentDescriptions: variables.contentDescriptions,
+          consignor: {
+            create: {
+              company: variables.consignorCompany,
+              name: variables.consignorName,
+              country: variables.consignorCountry,
+              address1: variables.consignorAddress1,
+              address2: variables.consignorAddress2,
+              zip: variables.consignorZip,
+              city: variables.consignorCity,
+              state: variables.consignorState,
+              phoneNumber: variables.consignorPhoneNumber,
+              email: variables.consignorEmail,
             },
-          })),
+          },
+          consignee: {
+            create: {
+              company: variables.consigneeCompany,
+              name: variables.consigneeName,
+              country: variables.consigneeCountry,
+              address1: variables.consigneeAddress1,
+              address2: variables.consigneeAddress2,
+              zip: variables.consigneeZip,
+              city: variables.consigneeCity,
+              state: variables.consigneeState,
+              phoneNumber: variables.consigneePhoneNumber,
+              email: variables.consigneeEmail,
+            },
+          },
+          verificationStatus: {
+            create: {
+              shipmentVerified: variables.shipmentVerified,
+              shipmentVerifiedTime: variables.shipmentVerifiedTime,
+              shipmentProcessed: variables.shipmentProcessed,
+              shipmentDepartureTime: variables.shipmentDepartureTime,
+            },
+          },
+          Boxes: {
+            create: variables.destructuredBoxes.map((box: any) => ({
+              boxAwbNumber: box.boxAwbNumber,
+              lengthCm: box.lengthCm,
+              widthCm: box.widthCm,
+              heightCm: box.heightCm,
+              actualWeightKg: box.actualWeightKg,
+              volumetricWeightKg: box.volumetricWeightKg,
+              chargeableWeightKg: box.chargeableWeightKg,
+              BoxesContent: {
+                create: box.destructuredBoxContent.map((content: any) => ({
+                  id: content.id,
+                  description: content.description,
+                  HsCode: content.HsCode,
+                  quantity: content.quantity,
+                  unitRate: content.unitRate,
+                  unitWeight: content.unitWeight,
+                  total: content.total,
+                })),
+              },
+            })),
+          },
         },
-      },
-    });
+      });
+    } else {
+      await prisma.shipment.create({
+        data: {
+          id: shipmentId,
+          awbNumber: variables.awbNumber,
+          autoAwb: variables.autoAwb,
+          trackingNumber: variables.trackingNumber,
+          trackingId,
+
+          userId,
+
+          date: variables.date,
+          hub: variables.hub,
+          service: variables.service,
+          division: variables.division,
+          totalBoxes: variables.totalBoxes,
+          totalActualWeightKg: variables.totalActualWeightKg,
+          totalVolumetricWeightKg: variables.totalChargeableWeightKg,
+          totalChargeableWeightKg: variables.totalChargeableWeightKg,
+          invoiceTotal: variables.invoiceTotal,
+          contentDescriptions: variables.contentDescriptions,
+          consignor: {
+            create: {
+              company: variables.consignorCompany,
+              name: variables.consignorName,
+              country: variables.consignorCountry,
+              address1: variables.consignorAddress1,
+              address2: variables.consignorAddress2,
+              zip: variables.consignorZip,
+              city: variables.consignorCity,
+              state: variables.consignorState,
+              phoneNumber: variables.consignorPhoneNumber,
+              email: variables.consignorEmail,
+            },
+          },
+          consignee: {
+            create: {
+              company: variables.consigneeCompany,
+              name: variables.consigneeName,
+              country: variables.consigneeCountry,
+              address1: variables.consigneeAddress1,
+              address2: variables.consigneeAddress2,
+              zip: variables.consigneeZip,
+              city: variables.consigneeCity,
+              state: variables.consigneeState,
+              phoneNumber: variables.consigneePhoneNumber,
+              email: variables.consigneeEmail,
+            },
+          },
+          verificationStatus: {
+            create: {
+              shipmentVerified: variables.shipmentVerified,
+              shipmentVerifiedTime: variables.shipmentVerifiedTime,
+              shipmentProcessed: variables.shipmentProcessed,
+              shipmentDepartureTime: variables.shipmentDepartureTime,
+            },
+          },
+          Boxes: {
+            create: variables.destructuredBoxes.map((box: any) => ({
+              boxAwbNumber: box.boxAwbNumber,
+              lengthCm: box.lengthCm,
+              widthCm: box.widthCm,
+              heightCm: box.heightCm,
+              actualWeightKg: box.actualWeightKg,
+              volumetricWeightKg: box.volumetricWeightKg,
+              chargeableWeightKg: box.chargeableWeightKg,
+              BoxesContent: {
+                create: box.destructuredBoxContent.map((content: any) => ({
+                  id: content.id,
+                  description: content.description,
+                  HsCode: content.HsCode,
+                  quantity: content.quantity,
+                  unitRate: content.unitRate,
+                  unitWeight: content.unitWeight,
+                  total: content.total,
+                })),
+              },
+            })),
+          },
+        },
+      });
+    }
 
     return res.status(200).json({ message: "Shipment edited successfully!" });
   } catch (error) {

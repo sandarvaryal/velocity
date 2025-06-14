@@ -21,7 +21,12 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (origin === process.env.FRONTEND_URL || !origin) {
+      if (
+        origin === process.env.FRONTEND_URL ||
+        origin === process.env.FRONTEND_URL_WWW
+        //   ||
+        // !origin
+      ) {
         callback(null, true);
       } else {
         callback(new Error("CORS error"));

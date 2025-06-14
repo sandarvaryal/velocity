@@ -8,7 +8,7 @@ import { FaUsers } from "react-icons/fa";
 // import { FaUsers } from "react-icons/fa";
 
 function unprotectedManageStaff() {
-  const { data, isError } = useQuery({
+  const { data, isError, isLoading } = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
       const response = await axios.get(
@@ -22,21 +22,24 @@ function unprotectedManageStaff() {
     placeholderData: [],
   });
 
+  if (isLoading) {
+    return <></>;
+  }
   if (isError) {
     toast.error("Error fething Users");
   }
 
   const navigate = useNavigate();
-  const prioritizedEmails = [
-    "thenexuscourier@gmail.com",
-    "dexeratech@gmail.com",
-  ];
+  // const prioritizedEmails = [
+  //   "thenexuscourier@gmail.com",
+  //   "dexeratech@gmail.com",
+  // ];
 
-  const sortedData = [...data].sort((a, b) => {
-    const aPriority = prioritizedEmails.includes(a.email) ? 0 : 1;
-    const bPriority = prioritizedEmails.includes(b.email) ? 0 : 1;
-    return aPriority - bPriority;
-  });
+  // const sortedData = [...data].sort((a, b) => {
+  //   const aPriority = prioritizedEmails.includes(a.email) ? 0 : 1;
+  //   const bPriority = prioritizedEmails.includes(b.email) ? 0 : 1;
+  //   return aPriority - bPriority;
+  // });
 
   return (
     <>
@@ -49,7 +52,7 @@ function unprotectedManageStaff() {
         <button
           className="border px-4 py-2 text-sm text-white font-semibold  bg-indigo-600 cursor-pointer"
           onClick={() => {
-            navigate("/superAdmin/createUser");
+            navigate("/user/createUser");
           }}
         >
           Create New User
@@ -66,7 +69,7 @@ function unprotectedManageStaff() {
               <span>User Role</span>
               <span>Actions</span>
             </div>
-            {sortedData.map((user: any) => (
+            {data.map((user: any) => (
               <div key={user.id} className=" border-b border-neutral-300">
                 <RenderUserInstance user={user} queryKey="user" />
               </div>

@@ -184,6 +184,8 @@ const registerProps = z.object({
   zip: z.string(),
   state: z.string(),
   city: z.string(),
+  address1: z.string(),
+  url: z.string(),
 });
 
 router.get("/getUsers", superAdminMiddleware, async (req, res) => {
@@ -300,6 +302,9 @@ router.post("/register", superAdminMiddleware, async (req, res) => {
     zip,
     state,
     city,
+
+    address1,
+    url,
   } = parsedInput.data;
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -328,6 +333,8 @@ router.post("/register", superAdminMiddleware, async (req, res) => {
       zip,
       state,
       city,
+      address1,
+      url,
     },
   });
 

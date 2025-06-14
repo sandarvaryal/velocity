@@ -36,7 +36,13 @@ router.post("/login", async (req, res) => {
     return res.status(401).json({ message: "Invalid credentials" });
   }
   setAuthCookies(res, userDb.id, userDb.role, userDb.refreshTokenVersion);
-  return res.status(200).json({ message: "Logged in successfully" });
+  const userObj = {
+    email: userDb.email,
+    username: userDb.username,
+    url: userDb.url,
+  };
+  // return res.status(200).json({ message: "Logged in successfully" });
+  return res.status(200).json(userObj);
 });
 
 router.post("/logout", (req, res) => {

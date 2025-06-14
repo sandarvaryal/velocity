@@ -6,7 +6,7 @@ export default function Footer() {
       <div className=" mx-auto grid grid-cols-1 md:grid-cols-3 gap-[5rem]">
         <div className="flex flex-col gap-6">
           <h2 className="font-semibold text-lg mb-1">
-            Velocity Cargo And Courier Pvt. Ltd.
+            Velocity Courier Pvt. Ltd.
           </h2>
           <p className="mb-1 text-[#abb2b9] text-[0.9rem]">
             Streamline your global shipping with our reliable cargo solutions
