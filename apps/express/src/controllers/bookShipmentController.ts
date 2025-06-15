@@ -96,6 +96,7 @@ export const createShipmentController = async (req: Request, res: Response) => {
     }
 
     const tempVariables = destructureShipmentData(shipment, true);
+    console.log("id", tempVariables.id);
 
     let variables: any;
     let variableAwbNumber: string;
@@ -146,24 +147,36 @@ export const createShipmentController = async (req: Request, res: Response) => {
 
     const userId = req.user?.id;
     const userRole = req.user?.role;
-    const createdShipment = await prisma.shipment.create({
-      data: { ...shipmentDataConfig(variables), userId },
-    });
 
-    if (userRole === "superAdmin") {
-      if (variables.client.length > 1) {
-        try {
-          await prisma.shipment.create({
-            data: {
-              ...shipmentDataConfig(variables),
-              userId: variables.client,
-            },
-          });
-        } catch {
-          return res.status(500).json({ message: "Internal error" });
-        }
+    let createdShipment;
+    if (userRole === "superAdmin" && variables.client.length > 1) {
+      try {
+        createdShipment = await prisma.shipment.create({
+          data: { ...shipmentDataConfig(variables), userId },
+        });
+      } catch {
+        return res.status(500).json({ message: "Internal error" });
       }
+    } else {
+      createdShipment = await prisma.shipment.create({
+        data: shipmentDataConfig(variables),
+      });
     }
+
+    // if (userRole === "superAdmin") {
+    //   if (variables.client.length > 1) {
+    //     try {
+    //       await prisma.shipment.create({
+    //         data: {
+    //           ...shipmentDataConfig(variables),
+    //           userId: variables.client,
+    //         },
+    //       });
+    //     } catch {
+    //       return res.status(500).json({ message: "Internal error" });
+    //     }
+    //   }
+    // }
 
     if (!createdShipment) {
       return res

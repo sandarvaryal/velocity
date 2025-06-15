@@ -240,7 +240,7 @@ export default function Nav() {
                   ? "text-[#0d78bc]"
                   : "hover:text-gray-400"
               }`}
-              onClick={() => navigate("/user/bookShipments")}
+              onClick={() => navigate("/user/bookShipment")}
             >
               <MdAssignmentAdd />
               Book Shipment

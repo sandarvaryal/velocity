@@ -34,7 +34,7 @@ export default function ClientSelect({ data1 }: { data1: any }) {
     // formState: { errors },
   } = useFormContext();
   let selectedClient = watch("client");
-  data1?.userId ? (selectedClient = data1?.userId) : "";
+  data1?.userId ? (selectedClient = data1?.userId) : watch("client");
   console.log(selectedClient);
 
   const { data, isLoading } = useQuery({

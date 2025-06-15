@@ -100,9 +100,9 @@ const DynamicSelect = ({ data, formFor }: { data: any; formFor: string }) => {
         setValue(key, value);
       }
     });
-    if (data.hub) {
-      setServicesOptions(optionsMap[data.hub] || []);
-    }
+    // if (data.hub) {
+    //   setServicesOptions(optionsMap[data.hub] || []);
+    // }
   }, [data, setValue]);
 
   useEffect(() => {
@@ -110,7 +110,7 @@ const DynamicSelect = ({ data, formFor }: { data: any; formFor: string }) => {
       setServicesOptions(optionsMap[selectedHub] || []);
 
       setValue("service", data?.service);
-      setValue("hub", data?.hub);
+      // setValue("hub", data?.hub);
     }
   }, [selectedHub, setValue]);
 

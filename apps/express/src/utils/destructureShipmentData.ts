@@ -25,6 +25,7 @@ export const destructureShipmentData = (shipment: any, isBooking: boolean) => {
   const date = isBooking ? new Date() : shipment.data.date;
   //experiment ShipmentId
   const id = isBooking ? uuidv4() : shipment.data.id;
+  console.log("firstId", id);
   //
   const {
     company: consignorCompany,
