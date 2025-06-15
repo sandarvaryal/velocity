@@ -136,6 +136,9 @@ const DynamicSelect = ({ data, formFor }: { data: any; formFor: string }) => {
     },
     retry: false,
   });
+  if (superAdminLoading) {
+    return null;
+  }
 
   return (
     <>

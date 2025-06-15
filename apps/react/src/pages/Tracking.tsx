@@ -58,7 +58,7 @@ export function Tracking() {
   const dataObj = JSON.parse(data.data);
 
   return (
-    <div className="max-w-[100rem] px-6 sm:px-12 mx-auto] bg-[#111111] min-h-[90vh] pt-20">
+    <div className="max-w-[100rem] px-6 sm:px-12 mx-auto] bg-[#111111] min-h-[100vh] pt-20">
       {/* <h1 className="text-xl font-semibold flex items-center gap-2  my-4 text-[#abb2b9]">
         <TbWorldSearch /> Tracking Details
       </h1> */}
@@ -119,19 +119,21 @@ export function Tracking() {
             {dataObj?.data?.checkpoints?.map((checkpoint: any, index: any) => (
               <div
                 key={index}
-                className="border-l-4 shadow-sm border-blue-500 pl-4 py-6"
+                className="border-l-4 shadow-sm border-primary pl-4 py-6"
               >
                 <div className="flex gap-1 flex-col lg:flex-row lg:items-center justify-between">
-                  <h2 className="text-lg font-semibold text-gray-800">
+                  <h2 className="text-lg font-semibold text-sidebar">
                     {checkpoint.subtag_message}
                   </h2>
                   <h3 className="flex items-center gap-2">
                     <IoTimerOutline className="text-lg" />
                     {/* <span>{getReadableData(checkpoint.checkpoint_time)}</span> */}
-                    <span>{checkpoint.checkpoint_time}</span>
+                    <span className="text-sidebar/30">
+                      {checkpoint.checkpoint_time}
+                    </span>
                   </h3>
                 </div>
-                <p className="mt-2 sm:mt-1 text-gray-700">
+                <p className="mt-2 sm:mt-1 text-sidebar/30">
                   {checkpoint.location}
                 </p>
               </div>

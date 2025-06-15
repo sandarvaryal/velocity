@@ -1,9 +1,9 @@
 import express from "express";
 const router = express.Router();
 
-import { authMiddleware } from "../../middlewares/auth_middleware";
+import { superAdminMiddleware } from "../../middlewares/superAdminMiddleware";
 import { getClientController } from "../../controllers/getClientController";
 
-router.get("/getClient", authMiddleware, getClientController);
+router.get("/getClient", superAdminMiddleware, getClientController);
 
 export default router;

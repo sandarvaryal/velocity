@@ -152,14 +152,19 @@ export const createShipmentController = async (req: Request, res: Response) => {
     if (userRole === "superAdmin" && variables.client.length > 1) {
       try {
         createdShipment = await prisma.shipment.create({
-          data: { ...shipmentDataConfig(variables), userId },
+          // data: { ...shipmentDataConfig(variables), userId },
+          data: {
+            ...shipmentDataConfig(variables),
+            userId: variables.client.length,
+          },
         });
       } catch {
         return res.status(500).json({ message: "Internal error" });
       }
     } else {
       createdShipment = await prisma.shipment.create({
-        data: shipmentDataConfig(variables),
+        // data: shipmentDataConfig(variables),
+        data: { ...shipmentDataConfig(variables), userId },
       });
     }
 

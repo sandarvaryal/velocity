@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/select";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useEffect } from "react";
 
 interface ClientSelect {
   name: string;
@@ -30,11 +31,11 @@ export default function ClientSelect({ data1 }: { data1: any }) {
   const {
     register,
     watch,
-    // setValue,
+    setValue,
     // formState: { errors },
   } = useFormContext();
   let selectedClient = watch("client");
-  data1?.userId ? (selectedClient = data1?.userId) : watch("client");
+  // data1?.userId ? (selectedClient = data1?.userId) : watch("client");
   console.log(selectedClient);
 
   const { data, isLoading } = useQuery({
@@ -51,12 +52,20 @@ export default function ClientSelect({ data1 }: { data1: any }) {
     },
   });
   if (isLoading) {
-    return <>wait</>;
+    return null;
   }
   console.log(data, "data");
+  console.log("suruko", data1);
+
+  // useEffect(() => {
+  //   if (selectedClient) {
+  //     setValue("client", data1?.client);
+  //   }
+  // }, [selectedClient, setValue]);
 
   return (
     <Select
+      defaultValue={data1?.userId}
       value={selectedClient}
       onValueChange={(value) =>
         register("client").onChange({ target: { value, name: "client" } })
