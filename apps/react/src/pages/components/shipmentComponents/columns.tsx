@@ -2,23 +2,23 @@
 import toast from "react-hot-toast";
 import {
   FaCopy,
-  FaEdit,
-  FaDownload,
-  FaPlaneDeparture,
-  FaHome,
+  // FaEdit,
+  // FaDownload,
+  // FaPlaneDeparture,
+  // FaHome,
 } from "react-icons/fa";
 // import { MdPrint, MdDeleteForever } from "react-icons/md";
-import { MdPrint } from "react-icons/md";
-import { RiVerifiedBadgeFill } from "react-icons/ri";
+// import { MdPrint } from "react-icons/md";
+// import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { Checkbox } from "@/components/ui/checkbox";
 
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 // import { QueryClient } from "@tanstack/react-query";
-import { queryClient } from "@/Providers";
+// import { queryClient } from "@/Providers";
 
-import axios from "axios";
-import { handlePrint } from "@/util/handlePrint";
-import { useQuery } from "@tanstack/react-query";
+// import axios from "axios";
+// import { handlePrint } from "@/util/handlePrint";
+// import { useQuery } from "@tanstack/react-query";
 import { Actions } from "./Actions";
 
 export type Payment = {

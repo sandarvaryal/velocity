@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/select";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 interface ClientSelect {
   name: string;
@@ -31,7 +31,7 @@ export default function ClientSelect({ data1 }: { data1: any }) {
   const {
     register,
     watch,
-    setValue,
+    // setValue,
     // formState: { errors },
   } = useFormContext();
   let selectedClient = watch("client");
