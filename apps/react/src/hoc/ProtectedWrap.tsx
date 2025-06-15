@@ -7,7 +7,7 @@ const ProtectedWrap = (WrappedComponent: React.ComponentType) => {
   return () => {
     const navigate = useNavigate();
 
-    const { isError, isLoading } = useQuery({
+    const { isError: testIsError, isLoading: testIsLoading } = useQuery({
       queryKey: ["verify"],
       queryFn: async () => {
         await axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/verify`, {
@@ -19,7 +19,7 @@ const ProtectedWrap = (WrappedComponent: React.ComponentType) => {
     });
 
     // useEffect(() => {
-    if (!isLoading && isError) {
+    if (!testIsError && testIsLoading) {
       // toast.error("Unauthorized");
       navigate("/login");
     }

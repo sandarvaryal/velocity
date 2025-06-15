@@ -16,7 +16,7 @@ import axios from "axios";
 import ClientSelect from "./formComponents/ClientSelect";
 
 const optionsMap: Record<string, string[]> = {
-  "Nexus self": [
+  "Velocity self": [
     "nepal post",
     "dhl",
     "dpex",
@@ -110,6 +110,7 @@ const DynamicSelect = ({ data, formFor }: { data: any; formFor: string }) => {
       setServicesOptions(optionsMap[selectedHub] || []);
 
       setValue("service", data?.service);
+      setValue("hub", data?.hub);
     }
   }, [selectedHub, setValue]);
 

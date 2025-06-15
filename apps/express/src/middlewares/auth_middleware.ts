@@ -27,7 +27,7 @@ export const authMiddleware = async (
     }
 
     if (!refreshToken) {
-      return res.status(401).json({ message: "UNAUTHORIZED eta" });
+      return res.status(401).json({ message: "UNAUTHORIZED 1" });
     }
 
     let refreshTokenData: RefreshTokenData;
@@ -38,7 +38,7 @@ export const authMiddleware = async (
       ) as RefreshTokenData;
     } catch (error: any) {
       console.error("Refresh token verification failed:", error.message);
-      return res.status(401).json({ message: "UNAUTHORIZED uta" });
+      return res.status(401).json({ message: "UNAUTHORIZED 2" });
     }
 
     const userDb = await prisma.user.findUnique({
@@ -49,7 +49,7 @@ export const authMiddleware = async (
       !userDb ||
       refreshTokenData.refreshTokenVersion !== userDb.refreshTokenVersion
     ) {
-      return res.status(401).json({ message: "UNAUTHORIZED hehe" });
+      return res.status(401).json({ message: "UNAUTHORIZED 3" });
     }
 
     // const newAccessToken = jwt.sign(

@@ -111,19 +111,25 @@ import {
 } from "@/components/ui/select";
 
 export function InvoiceKeys({ data }: { data: any }) {
-  const { control, setValue, register } = useFormContext();
+  const { control, setValue, register, watch } = useFormContext();
   // const [selectedDivision, setSelectedDivision] = useState<string | number>(
   //   data?.division || ""
   // );
   const [selectedDivision, setSelectedDivision] = useState(data.division);
+  const testDivision = watch("division");
+  // useEffect(() => {
+  //   if (selectedDivision) {
+  //     setValue("division", data?.division);
+  //   }
+  // }, [selectedDivision, setValue]);
 
   // if (data) {
   //   setValue("division", data.division);
   // }
   useEffect(() => {
     if (data?.division) {
-      setSelectedDivision(data.division);
-      setValue("division", data.division);
+      setSelectedDivision(data?.division);
+      setValue("division", data?.division);
     }
   }, [data?.division, setValue]);
   console.log(selectedDivision);
@@ -215,7 +221,8 @@ export function InvoiceKeys({ data }: { data: any }) {
             Division:
           </label>
           <Select
-            value={selectedDivision}
+            // value={selectedDivision}
+            value={testDivision}
             onValueChange={(options: any) => {
               handleDivisionChange(options);
             }}

@@ -140,7 +140,10 @@ export const getShipmentsController = async (req: Request, res: Response) => {
           include: includeConfig,
         });
         // recordNumber = shipment.length;
-        recordNumber = await prisma.shipment.count();
+        // recordNumber = await prisma.shipment.count();
+        recordNumber = await prisma.shipment.count({
+          where: filterCriteria,
+        });
       } else {
         shipment = await prisma.shipment.findMany({
           where: {
@@ -154,7 +157,10 @@ export const getShipmentsController = async (req: Request, res: Response) => {
           include: includeConfig,
         });
 
-        recordNumber = await prisma.shipment.count();
+        // recordNumber = await prisma.shipment.count();
+        recordNumber = await prisma.shipment.count({
+          where: { ...filterCriteria, userId },
+        });
       }
       console.log("recordNumbaer", recordNumber);
       const totalPage = Math.ceil(recordNumber / limit);
@@ -171,6 +177,7 @@ export const getShipmentsController = async (req: Request, res: Response) => {
 
   try {
     let shipment;
+    // let recordNumber;
     if (role === "superAdmin") {
       shipment = await prisma.shipment.findMany({
         skip: startIndex,
@@ -178,6 +185,9 @@ export const getShipmentsController = async (req: Request, res: Response) => {
         where: filterCriteria,
         include: includeConfig,
       });
+      // recordNumber = await prisma.shipment.count({
+      //   where: filterCriteria,
+      // });
     } else {
       shipment = await prisma.shipment.findMany({
         skip: startIndex,
@@ -185,11 +195,26 @@ export const getShipmentsController = async (req: Request, res: Response) => {
         where: { ...filterCriteria, userId },
         include: includeConfig,
       });
+      // recordNumber = await prisma.shipment.count({
+      //   where: { ...filterCriteria, userId },
+      // });
     }
-    const recordNumber = await prisma.shipment.count({
-      where: filterCriteria,
-    });
-    const totalPage = Math.ceil(recordNumber / limit);
+    // recordNumber = await prisma.shipment.count({
+    //   where: filterCriteria,
+    // });
+    let totalPage;
+    if (role === "superAdmin") {
+      const recordNumber = await prisma.shipment.count({
+        where: filterCriteria,
+      });
+      totalPage = Math.ceil(recordNumber / limit);
+    } else {
+      const recordNumber = await prisma.shipment.count({
+        where: { ...filterCriteria, userId: userId },
+      });
+      totalPage = Math.ceil(recordNumber / limit);
+    }
+    // const totalPage = Math.ceil(recordNumber / limit);
 
     if (!shipment) {
       return res.status(404).json({ message: "No Shipment found" });

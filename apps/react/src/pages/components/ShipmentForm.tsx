@@ -152,7 +152,7 @@
 import ConsignorConsigneeForm from "./ConsignorConsigneeForm";
 import BoxForm from "./BoxForm";
 import DynamicSelect from "./OtherFields";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { bookShipment } from "../../api/shipment/bookShipment";
 import { editShipment } from "../../api/shipment/editShipment";
 
@@ -180,13 +180,13 @@ export default function ShipmentForm({
       },
     },
   });
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const mutateBookShipment = useMutation({
     mutationFn: bookShipment,
     onSuccess: (data: any) => {
       toast.success(data.message);
-      navigate("/shipments");
+      // navigate("/shipments");
     },
     onError: (error: any) => {
       toast.error(error.response?.data?.message);
@@ -197,7 +197,7 @@ export default function ShipmentForm({
     mutationFn: editShipment,
     onSuccess: (data: any) => {
       toast.success(data.message);
-      navigate("/shipments");
+      // navigate("/shipments");
     },
     onError: (error: any) => {
       toast.error(error.response?.data?.message);

@@ -23,9 +23,7 @@ export const superAdminMiddleware = async (
         ) as AccessTokenData;
 
         if (user.role !== "superAdmin") {
-          return res
-            .status(403)
-            .json({ message: "Forbidden: UNAUTHORIZED eta" });
+          return res.status(403).json({ message: "Forbidden: UNAUTHORIZED 4" });
         }
 
         req.user = user;
@@ -34,7 +32,7 @@ export const superAdminMiddleware = async (
     }
 
     if (!refreshToken) {
-      return res.status(401).json({ message: "UNAUTHORIZED eta" });
+      return res.status(401).json({ message: "UNAUTHORIZED 5" });
     }
 
     let refreshTokenData: RefreshTokenData;
@@ -45,7 +43,7 @@ export const superAdminMiddleware = async (
       ) as RefreshTokenData;
     } catch (error: any) {
       console.error("Refresh token verification failed:", error.message);
-      return res.status(401).json({ message: "UNAUTHORIZED uta" });
+      return res.status(401).json({ message: "UNAUTHORIZED 6" });
     }
 
     const userDb = await prisma.user.findUnique({
@@ -57,11 +55,11 @@ export const superAdminMiddleware = async (
       !userDb ||
       refreshTokenData.refreshTokenVersion !== userDb.refreshTokenVersion
     ) {
-      return res.status(401).json({ message: "UNAUTHORIZED hehe" });
+      return res.status(401).json({ message: "UNAUTHORIZED 7" });
     }
 
     if (userDb.role !== "admin") {
-      return res.status(403).json({ message: "Forbidden: UNAUTHORIZED" });
+      return res.status(403).json({ message: "Forbidden: UNAUTHORIZED 8" });
     }
 
     // const newAccessToken = jwt.sign(

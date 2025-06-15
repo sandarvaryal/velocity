@@ -4,9 +4,9 @@ import { useLocation } from "react-router-dom";
 // import { MdAssignmentAdd } from "react-icons/md";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import ProtectedWrap from "@/hoc/ProtectedWrap";
+// import ProtectedWrap from "@/hoc/ProtectedWrap";
 
-export function UnprotectedTestBookShipment() {
+export function TestBookShipment() {
   const location = useLocation();
   const { data, isLoading } = useQuery({
     queryKey: ["user"],
@@ -38,4 +38,4 @@ export function UnprotectedTestBookShipment() {
     </div>
   );
 }
-export const TestBookShipment = ProtectedWrap(UnprotectedTestBookShipment);
+// export const TestBookShipment = ProtectedWrap(UnprotectedTestBookShipment);

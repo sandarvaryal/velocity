@@ -8,8 +8,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+// import axios from "axios";
+// import { useQuery } from "@tanstack/react-query";
 import { NavLink } from "react-router-dom";
 
 export function NavSecondary({
@@ -22,41 +22,41 @@ export function NavSecondary({
     icon: LucideIcon;
   }[];
 } & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
-  const { data, isError, isLoading } = useQuery({
-    queryKey: ["superVerify"],
-    queryFn: async () => {
-      await axios.get(`${import.meta.env.VITE_BACKEND_URL}/superAdmin/verify`, {
-        withCredentials: true,
-      });
-      return true;
-    },
-    retry: false,
-  });
+  // const { data, isError, isLoading } = useQuery({
+  //   queryKey: ["verify"],
+  //   queryFn: async () => {
+  //     await axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/verify`, {
+  //       withCredentials: true,
+  //     });
+  //     return true;
+  //   },
+  //   retry: false,
+  // });
   return (
     <SidebarGroup {...props}>
       <SidebarGroupContent>
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              {data && !isLoading && !isError ? (
-                <SidebarMenuButton asChild size="sm">
-                  <NavLink
-                    to={item.url}
-                    className={({ isActive }) =>
-                      isActive ? "mr-10" : "text-yellow-500"
-                    }
-                  >
-                    <item.icon />
-                    <span>{item.title}</span>
-                  </NavLink>
-                  {/* <a href={item.url}>
+              {/* {data && !isLoading && !isError ? ( */}
+              <SidebarMenuButton asChild size="sm">
+                <NavLink
+                  to={item.url}
+                  className={({ isActive }) =>
+                    isActive ? "mr-10" : "text-yellow-500"
+                  }
+                >
+                  <item.icon />
+                  <span>{item.title}</span>
+                </NavLink>
+                {/* <a href={item.url}>
                     <item.icon />
                     <span>{item.title}</span>
                   </a> */}
-                </SidebarMenuButton>
-              ) : (
+              </SidebarMenuButton>
+              {/* ) : (
                 <></>
-              )}
+              )} */}
               {/* <SidebarMenuButton asChild size="sm">
                 <a href={item.url}>
                   <item.icon />
