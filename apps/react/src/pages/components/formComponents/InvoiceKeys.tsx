@@ -111,7 +111,13 @@ import {
 } from "@/components/ui/select";
 
 export function InvoiceKeys({ data }: { data: any }) {
-  const { control, setValue, register, watch } = useFormContext();
+  const {
+    control,
+    setValue,
+    register,
+    watch,
+    formState: { errors },
+  } = useFormContext();
   // const [selectedDivision, setSelectedDivision] = useState<string | number>(
   //   data?.division || ""
   // );
@@ -213,6 +219,8 @@ export function InvoiceKeys({ data }: { data: any }) {
   //   setValue("division", value);
   // };
 
+  const divisionError = errors?.division?.message as string | undefined;
+
   return (
     <div className=" p-4 rounded-md">
       <div className="flex flex-col">
@@ -237,6 +245,9 @@ export function InvoiceKeys({ data }: { data: any }) {
               <SelectItem value="6000">6000</SelectItem>
             </SelectContent>
           </Select>
+          {divisionError && (
+            <p className="text-red-500 text-xs mt-1">{divisionError}</p>
+          )}
           {/* <select
             id="division"
             {...register("division")}

@@ -25,7 +25,10 @@ function UnprotectedUser() {
             </div>
           </SidebarInset> */}
 
-          <Outlet />
+          {/* <Outlet /> */}
+          <div style={{ flex: 1, overflow: "auto" }}>
+            <Outlet />
+          </div>
         </div>
       </SidebarProvider>
     </div>

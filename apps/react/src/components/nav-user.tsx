@@ -27,6 +27,12 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+// import { clearIsSuperAdmin, setIsSuperAdmin } from "@/store/superAdminSlice";
+// import { clearAdmin, setAdmin } from "@/store/adminSlice";
+import { clearIsSuperAdmin } from "@/store/superAdminSlice";
+import { clearAdmin } from "@/store/adminSlice";
+import { useDispatch } from "react-redux";
+import { queryClient } from "@/Providers";
 
 // export function NavUser({
 //   user,
@@ -40,6 +46,7 @@ import { useNavigate } from "react-router-dom";
 export function NavUser() {
   const { isMobile } = useSidebar();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { mutate: logout } = useMutation({
     mutationFn: async () => {
@@ -52,9 +59,14 @@ export function NavUser() {
       );
     },
     onSuccess: () => {
+      dispatch(clearIsSuperAdmin());
+      dispatch(clearAdmin());
       localStorage.removeItem("user");
       toast.success("Logged Out Successfully");
+      queryClient.invalidateQueries({ queryKey: ["verifySuperAdmin"] });
+      queryClient.invalidateQueries({ queryKey: ["verifyAdmin"] });
       navigate("/");
+      // navigate("/", { state: { refresh: Date.now() } });
     },
     onError: (error: any) => {
       toast.error(error.response?.data?.message || "Logout failed");
@@ -134,13 +146,15 @@ export function NavUser() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <button className="flex gap-2" onClick={() => logout()}>
-                <LogOut />
-                Log out
-              </button>
-              {/* <LogOut />
-              Log out */}
+            <DropdownMenuItem
+              onClick={() => {
+                logout();
+              }}
+            >
+              {/* <button className="flex gap-2" onClick={() => logout()}> */}
+              <LogOut />
+              Log out
+              {/* </button> */}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

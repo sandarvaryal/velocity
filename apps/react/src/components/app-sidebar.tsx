@@ -25,6 +25,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { useSelector } from "react-redux";
 
 const data = {
   user: {
@@ -162,6 +163,9 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const isSuperAdmin = useSelector(
+    (state: any) => state.isSuperAdmin.superAdmin
+  );
   return (
     <Sidebar
       className="top-(--header-height) h-[calc(100svh-var(--header-height))]!"
@@ -187,7 +191,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavMain items={data.navMain} />
         <NavProjects projects={data.projects} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        {isSuperAdmin ? (
+          <NavSecondary items={data.navSecondary} className="mt-auto" />
+        ) : (
+          ""
+        )}
       </SidebarContent>
       <SidebarFooter>
         {/* <NavUser user={data.user} /> */}

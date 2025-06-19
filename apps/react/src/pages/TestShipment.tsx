@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { DataTable } from "./components/shipmentComponents/DataTable";
-import { columns } from "./components/shipmentComponents/columns";
+// import { getColumns } from "./components/shipmentComponents/columns";
+import getColumns from "./components/shipmentComponents/columns";
 // import { useNavigate } from "react-router-dom";
 // import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useQuery, QueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import ProtectedWrap from "@/hoc/ProtectedWrap";
+import { useSelector } from "react-redux";
 // import toast from "react-hot-toast";
 
 export const queryClient = new QueryClient();
@@ -57,6 +59,9 @@ export function UnprotectedTestShipment() {
   //     },
   //     retry: false,
   //   });
+  const isSuperAdmin = useSelector(
+    (state: any) => state.isSuperAdmin.superAdmin
+  );
 
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["shipments", filters],
@@ -154,6 +159,10 @@ export function UnprotectedTestShipment() {
   //   return formattedDate;
   // };
   console.log("totalPage", data.totalPage);
+  // const isSuperAdmin = useSelector(
+  //   (state: any) => state.isSuperAdmin.superAdmin
+  // );
+  const columns = getColumns(isSuperAdmin);
 
   return (
     <div className="container mx-auto py-10 px-10 flex flex-col gap-5">

@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+// import { useQuery } from "@tanstack/react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import { IoClose } from "react-icons/io5";
 import { FaSearch } from "react-icons/fa";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 export default function Nav() {
   const navigate = useNavigate();
@@ -16,17 +17,45 @@ export default function Nav() {
   const location = useLocation();
 
   const isActive = (path: string) => location.pathname === path;
+  // const isSuperAdmin = useSelector(
+  //   (state: any) => state.isSuperAdmin.superAdmin
+  // );
+  const isAdmin = useSelector((state: any) => state.isAdmin.admin);
 
-  const { isError, isLoading } = useQuery({
-    queryKey: ["verify"],
-    queryFn: async () => {
-      await axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/verify`, {
-        withCredentials: true,
-      });
-      return true;
-    },
-    retry: false,
-  });
+  // const { isError, isLoading } = useQuery({
+  //   queryKey: ["verify"],
+  //   queryFn: async () => {
+  //     await axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/verify`, {
+  //       withCredentials: true,
+  //     });
+  //     return true;
+  //   },
+  //   retry: false,
+  // });
+  // const { data, isError, isLoading, isSuccess } = useQuery({
+  //   queryKey: ["verify"],
+  //   queryFn: async () => {
+  //     const res = await axios.get(
+  //       `${import.meta.env.VITE_BACKEND_URL}/superAdmin/verify`,
+  //       {
+  //         withCredentials: true,
+  //       }
+  //     );
+  //     return true;
+  //   },
+  //   retry: false,
+  //   staleTime: Infinity,
+  // });
+
+  // dispatch(setIsSuperAdmin(!isError));
+  // useEffect(() => {
+  //   if (!isLoading && (isSuccess || isError)) {
+  //     dispatch(setIsSuperAdmin(!isError));
+  //   }
+  // }, [isLoading, isError, dispatch, isSuccess]);
+  // if (isLoading) {
+  //   return null;
+  // }
 
   const [searchInput, setSearchInput] = useState("");
 
@@ -55,7 +84,7 @@ export default function Nav() {
     setIsOpen(false);
   }, [location.pathname]);
 
-  if (isLoading) return <></>;
+  // if (isLoading) return <></>;
 
   //bg-[#5D6894]
   return (
@@ -199,7 +228,8 @@ export default function Nav() {
 
       {/* Desktop Menu */}
       <div className="hidden sm:flex sm:gap-10 items-center">
-        {!isError ? (
+        {/* {!isError ? ( */}
+        {isAdmin ? (
           <>
             <div className="flex items-center gap-2">
               <input
@@ -284,6 +314,7 @@ export default function Nav() {
             </button>
           </>
         )}
+        {/* )} */}
       </div>
 
       {/* Mobile Slide-In Menu */}
@@ -292,97 +323,97 @@ export default function Nav() {
           isOpen ? "translate-x-0" : "translate-x-full"
         } sm:hidden flex flex-col gap-4 px-4 pt-24 pb-10`}
       >
-        {!isError ? (
-          <>
-            <div className="flex items-center gap-2">
-              <input
-                className="border-b border-gray-500 focus:border-blue-500 bg-transparent text-white placeholder-gray-400 text-sm text-center w-full"
-                placeholder="AwbNumber"
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-              />
-              <button className="cursor-pointer" onClick={handleNavSearch}>
-                <FaSearch className="text-white hover:text-gray-400 transition-all" />
-              </button>
-            </div>
-            <button
-              className={`flex text-white font-semibold items-center gap-2 text-sm cursor-pointer ${
-                isActive("/user/dashboard") ? "text-[#0d78bc]" : ""
-              }`}
-              onClick={() => {
-                navigate("/user/dashboard");
-                setIsOpen(false);
-              }}
-            >
-              <MdDashboard />
-              Dashboard
+        {/* {!isError ? ( */}
+        <>
+          <div className="flex items-center gap-2">
+            <input
+              className="border-b border-gray-500 focus:border-blue-500 bg-transparent text-white placeholder-gray-400 text-sm text-center w-full"
+              placeholder="AwbNumber"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
+            <button className="cursor-pointer" onClick={handleNavSearch}>
+              <FaSearch className="text-white hover:text-gray-400 transition-all" />
             </button>
-            <button
-              className={`flex text-white font-semibold items-center gap-2 text-sm cursor-pointer ${
-                isActive("/shipments") ? "text-[#0d78bc]" : ""
-              }`}
-              onClick={() => {
-                navigate("/shipments");
-                setIsOpen(false);
-              }}
-            >
-              <FaPlaneDeparture />
-              Shipments
-            </button>
-            <button
-              className={`flex text-white font-semibold items-center gap-2 text-sm cursor-pointer ${
-                isActive("/bookShipments") ? "text-[#0d78bc]" : ""
-              }`}
-              onClick={() => {
-                navigate("/bookShipments");
-                setIsOpen(false);
-              }}
-            >
-              <MdAssignmentAdd />
-              Book Shipment
-            </button>
-          </>
+          </div>
+          <button
+            className={`flex text-white font-semibold items-center gap-2 text-sm cursor-pointer ${
+              isActive("/user/dashboard") ? "text-[#0d78bc]" : ""
+            }`}
+            onClick={() => {
+              navigate("/user/dashboard");
+              setIsOpen(false);
+            }}
+          >
+            <MdDashboard />
+            Dashboard
+          </button>
+          <button
+            className={`flex text-white font-semibold items-center gap-2 text-sm cursor-pointer ${
+              isActive("/shipments") ? "text-[#0d78bc]" : ""
+            }`}
+            onClick={() => {
+              navigate("/shipments");
+              setIsOpen(false);
+            }}
+          >
+            <FaPlaneDeparture />
+            Shipments
+          </button>
+          <button
+            className={`flex text-white font-semibold items-center gap-2 text-sm cursor-pointer ${
+              isActive("/bookShipments") ? "text-[#0d78bc]" : ""
+            }`}
+            onClick={() => {
+              navigate("/bookShipments");
+              setIsOpen(false);
+            }}
+          >
+            <MdAssignmentAdd />
+            Book Shipment
+          </button>
+        </>
         ) : (
-          <>
-            {location.pathname === "/" && (
-              <>
-                <a
-                  href="#features"
-                  className="text-[#abb2b9] hover:text-white text-sm"
-                >
-                  Our Features
-                </a>
-                <a
-                  href="#about"
-                  className="text-[#abb2b9] hover:text-white text-sm"
-                >
-                  About Us
-                </a>
-                <a
-                  href="#vision"
-                  className="text-[#abb2b9] hover:text-white text-sm"
-                >
-                  Our Vision
-                </a>
-                <a
-                  href="#location"
-                  className="text-[#abb2b9] hover:text-white text-sm"
-                >
-                  Our Location
-                </a>
-              </>
-            )}
-            <button
-              className="bg-[#F97316] hover:bg-[#EA6309] px-4 py-2 rounded text-white font-bol"
-              onClick={() => {
-                navigate("/login");
-                setIsOpen(false);
-              }}
-            >
-              LOGIN
-            </button>
-          </>
-        )}
+        <>
+          {location.pathname === "/" && (
+            <>
+              <a
+                href="#features"
+                className="text-[#abb2b9] hover:text-white text-sm"
+              >
+                Our Features
+              </a>
+              <a
+                href="#about"
+                className="text-[#abb2b9] hover:text-white text-sm"
+              >
+                About Us
+              </a>
+              <a
+                href="#vision"
+                className="text-[#abb2b9] hover:text-white text-sm"
+              >
+                Our Vision
+              </a>
+              <a
+                href="#location"
+                className="text-[#abb2b9] hover:text-white text-sm"
+              >
+                Our Location
+              </a>
+            </>
+          )}
+          <button
+            className="bg-[#F97316] hover:bg-[#EA6309] px-4 py-2 rounded text-white font-bol"
+            onClick={() => {
+              navigate("/login");
+              setIsOpen(false);
+            }}
+          >
+            LOGIN
+          </button>
+        </>
+        {/* )} */}
       </div>
     </nav>
   );

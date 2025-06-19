@@ -11,9 +11,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+// import { useQuery } from "@tanstack/react-query";
+// import axios from "axios";
 import ClientSelect from "./formComponents/ClientSelect";
+import { useSelector } from "react-redux";
 
 const optionsMap: Record<string, string[]> = {
   "Velocity self": [
@@ -126,28 +127,32 @@ const DynamicSelect = ({ data, formFor }: { data: any; formFor: string }) => {
   //   setValue("Hub", value);
   // };
 
-  const { isError: superAdminError, isLoading: superAdminLoading } = useQuery({
-    queryKey: ["verify"],
-    queryFn: async () => {
-      await axios.get(`${import.meta.env.VITE_BACKEND_URL}/superAdmin/verify`, {
-        withCredentials: true,
-      });
-      return true;
-    },
-    retry: false,
-  });
-  if (superAdminLoading) {
-    return null;
-  }
+  // const { isError: superAdminError, isLoading: superAdminLoading } = useQuery({
+  //   queryKey: ["verify"],
+  //   queryFn: async () => {
+  //     await axios.get(`${import.meta.env.VITE_BACKEND_URL}/superAdmin/verify`, {
+  //       withCredentials: true,
+  //     });
+  //     return true;
+  //   },
+  //   retry: false,
+  // });
+  // if (superAdminLoading) {
+  //   return null;
+  // }
+  const isSuperAdmin = useSelector(
+    (state: any) => state.isSuperAdmin.superAdmin
+  );
 
   return (
     <>
       <div className=" flex flex-col gap-4">
-        {!superAdminError && !superAdminLoading ? (
+        {/* {!superAdminError && !superAdminLoading ? (
           <ClientSelect data1={data} />
         ) : (
           ""
-        )}
+        )} */}
+        {isSuperAdmin ? <ClientSelect data1={data} /> : ""}
 
         {formFor === "EditShipment" ? (
           <button
@@ -161,17 +166,27 @@ const DynamicSelect = ({ data, formFor }: { data: any; formFor: string }) => {
 
         {/* AWB Number Input */}
         <div className="flex flex-col gap-2">
-          <label htmlFor="awbNumber" className=" font-medium">
-            AWB Number
-          </label>
-          <Input
-            value={data.awbNumber}
-            className="border px-2 py-1 focus:ring-2 focus:border-transparent outline-none w-full"
-            type="text"
-            id="awbNumber"
-            placeholder="AWB Number"
-            {...register("awbNumber")}
-          />
+          {isSuperAdmin ? (
+            <>
+              <label htmlFor="awbNumber" className=" font-medium">
+                AWB Number
+              </label>
+              <Input
+                // value={data.awbNumber}
+                defaultValue={data.awbNumber}
+                className="border px-2 py-1 focus:ring-2 focus:border-transparent outline-none w-full"
+                type="text"
+                id="awbNumber"
+                placeholder="AWB Number"
+                {...register("awbNumber")}
+              />
+            </>
+          ) : (
+            // <span className="border px-2 py-1 focus:ring-2 focus:border-transparent outline-none w-full">
+            //   {data.awbNumber ? data.awbNumber : "AwbNumber"}
+            // </span>
+            ""
+          )}
         </div>
 
         {/* Hub Selection */}

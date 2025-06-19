@@ -132,41 +132,56 @@
 //eta bata
 
 import { useEffect, useRef, useState } from "react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { loginUser } from "../api/user/login";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
 
 export default function Login() {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const isAdmin = useSelector((state: any) => state.isAdmin.admin);
+
+  // const isSuperAdmin = useSelector(
+  //   (state: any) => state.isSuperAdmin.superAdmin
+  // );
+  // const isAdmin = useSelector((state: any) => state.isAdmin.admin);
 
   const navigate = useNavigate();
-  const { isError, isLoading } = useQuery({
-    queryKey: ["verify"],
-    queryFn: async () => {
-      await axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/verify`, {
-        withCredentials: true,
-      });
-      return true;
-    },
-    retry: false,
-  });
+  // const { isError, isLoading } = useQuery({
+  //   queryKey: ["verify"],
+  //   queryFn: async () => {
+  //     await axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/verify`, {
+  //       withCredentials: true,
+  //     });
+  //     return true;
+  //   },
+  //   retry: false,
+  // });
+
+  // useEffect(() => {
+  //   if (!isLoading && !isError) {
+  //     navigate("/user/shipment");
+  //   }
+  // }, [isError, isLoading, navigate]);
 
   useEffect(() => {
-    if (!isLoading && !isError) {
+    if (isAdmin) {
       navigate("/user/shipment");
     }
-  }, [isError, isLoading, navigate]);
+  }, [isAdmin]);
 
   const { mutate } = useMutation({
     mutationFn: loginUser,
     onSuccess: (data: any) => {
       // toast.success(data.message);
+      // dispatch(setIsSuperAdmin(false));
+      // dispatch(setAdmin(false));
       toast.success("Logged in successfully!");
       console.log(data);
       localStorage.setItem("user", JSON.stringify(data));

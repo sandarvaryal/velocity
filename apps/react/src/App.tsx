@@ -26,19 +26,14 @@ import { EditShipment } from "./pages/EditShipment";
 import { NotFound } from "./pages/404";
 import { ManageStaffs } from "./pages/ManageStaffs";
 import { CreateUser } from "./pages/CreateUser";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { useDispatch } from "react-redux";
+import { setIsSuperAdmin } from "./store/superAdminSlice";
+import { useEffect } from "react";
+import { setAdmin } from "./store/adminSlice";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  // const { isError } = useQuery({
-  //   queryKey: ["verify"],
-  //   queryFn: async () => {
-  //     await axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/verify`, {
-  //       withCredentials: true,
-  //     });
-  //     return true;
-  //   },
-  //   retry: false,
-  // });
-
   return (
     <div className="flex flex-col min-h-screen">
       <div className="bg-white">
@@ -135,6 +130,63 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const dispatch = useDispatch();
+  // const { isError, isLoading } = useQuery({
+  //   queryKey: ["verify"],
+  //   queryFn: async () => {
+  //     await axios.get(`${import.meta.env.VITE_BACKEND_URL}/superAdmin/verify`, {
+  //       withCredentials: true,
+  //     });
+  //     return true;
+  //   },
+  //   retry: false,
+  // });
+
+  const {
+    isError: superAdminError,
+    isLoading: superAdminLoading,
+    // isSuccess: superAdminSuccess,
+  } = useQuery({
+    queryKey: ["verifySuperAdmin"],
+    queryFn: async () => {
+      await axios.get(`${import.meta.env.VITE_BACKEND_URL}/superAdmin/verify`, {
+        withCredentials: true,
+      });
+      return true;
+    },
+    retry: false,
+    staleTime: Infinity,
+  });
+
+  useEffect(() => {
+    if (!superAdminLoading) {
+      dispatch(setIsSuperAdmin(!superAdminError));
+    }
+  }, [superAdminLoading, superAdminError, dispatch]);
+
+  // Verify Admin
+  const {
+    isError: adminError,
+    isLoading: adminLoading,
+    // isSuccess: adminSuccess,
+  } = useQuery({
+    queryKey: ["verifyAdmin"],
+    queryFn: async () => {
+      await axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/verify`, {
+        withCredentials: true,
+      });
+      return true;
+    },
+    retry: false,
+    staleTime: Infinity,
+  });
+
+  useEffect(() => {
+    if (!adminLoading) {
+      dispatch(setAdmin(!adminError));
+    }
+  }, [adminLoading, adminError, dispatch]);
+
   return (
     <>
       <RouterProvider router={router} />

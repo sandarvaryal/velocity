@@ -1,11 +1,12 @@
 import { queryClient } from "@/Providers";
 import { handlePrint } from "@/util/handlePrint";
-import { useQuery } from "@tanstack/react-query";
+// import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { FaDownload, FaEdit, FaHome, FaPlaneDeparture } from "react-icons/fa";
 import { MdPrint } from "react-icons/md";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 export const Actions = ({
@@ -21,23 +22,32 @@ export const Actions = ({
   shipmentDeparture: boolean;
   shipmentDelivered: boolean;
 }) => {
-  const { isError: superAdminError, isLoading: superAdminLoading } = useQuery({
-    queryKey: ["verify"],
-    queryFn: async () => {
-      await axios.get(`${import.meta.env.VITE_BACKEND_URL}/superAdmin/verify`, {
-        withCredentials: true,
-      });
-      return true;
-    },
-    retry: false,
-  });
+  // const { isError: superAdminError, isLoading: superAdminLoading } = useQuery({
+  //   queryKey: ["verify"],
+  //   queryFn: async () => {
+  //     await axios.get(`${import.meta.env.VITE_BACKEND_URL}/superAdmin/verify`, {
+  //       withCredentials: true,
+  //     });
+  //     return true;
+  //   },
+  //   retry: false,
+  // });
+
+  const isSuperAdmin = useSelector(
+    (state: any) => state.isSuperAdmin.superAdmin
+  );
+
   return (
     <div className="flex gap-2">
-      <NavLink to={`/user/editShipment/${awbNumber}`}>
-        <button className="hover:underline text-xl cursor-pointer hover:text-purple-400 transition-all">
-          <FaEdit className="hover:text-primary transition-all  dark:hover:text-foreground" />
-        </button>
-      </NavLink>
+      {isSuperAdmin ? (
+        <NavLink to={`/user/editShipment/${awbNumber}`}>
+          <button className="hover:underline text-xl cursor-pointer hover:text-purple-400 transition-all">
+            <FaEdit className="hover:text-primary transition-all  dark:hover:text-foreground" />
+          </button>
+        </NavLink>
+      ) : (
+        ""
+      )}
       <button
         className="hover:underline text-xl cursor-pointer hover:text-purple-400 transition-all flex gap-2"
         onClick={() => handlePrint(awbNumber)}
@@ -50,7 +60,7 @@ export const Actions = ({
       >
         <FaDownload className="hover:text-primary transition-all  dark:hover:text-foreground" />
       </button>{" "}
-      {!superAdminError && !superAdminLoading ? (
+      {isSuperAdmin ? (
         <>
           <div
             className="text-xl cursor-pointer hover:text-[#00AEE4] transition-all"

@@ -148,7 +148,8 @@ const PhoneInput = ({ name, data, formFor }: PhoneInputProps) => {
       /> */}
       <Input
         {...register(fieldName)}
-        value={value}
+        // value={value}
+        defaultValue={value}
         id={name}
         type={fieldType}
         className="w-full transition-all"
